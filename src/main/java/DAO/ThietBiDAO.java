@@ -11,21 +11,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ThanhVienDAO {
+public class ThietBiDAO {
     private SessionFactory factory;
-    public ThanhVienDAO(){
+    public ThietBiDAO(){
         factory = Util.HibernateUtil.getSessionFactory();
     }
-    public ArrayList<ThanhVien> getData(){
-        ArrayList<ThanhVien> listThanhVien = new ArrayList<>();
+    public ArrayList<ThietBi> getData(){
+        ArrayList<ThietBi> listThietBi = new ArrayList<>();
         Session session = factory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            List lst= session.createQuery("FROM ThanhVien").list();
+            List lst= session.createQuery("FROM ThietBi").list();
             for (Iterator iterator = lst.iterator(); iterator.hasNext();){
-                ThanhVien thanhVien = (ThanhVien) iterator.next();
-                listThanhVien.add(thanhVien);
+                ThietBi thietBi = (ThietBi) iterator.next();
+                listThietBi.add(thietBi);
             }
         }catch (HibernateException e){
             if (tx != null) tx.rollback();
@@ -33,6 +33,6 @@ public class ThanhVienDAO {
         }finally {
             session.close();
         }
-        return listThanhVien;
+        return listThietBi;
     }
 }

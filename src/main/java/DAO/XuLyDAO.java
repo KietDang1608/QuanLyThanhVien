@@ -1,7 +1,7 @@
 package DAO;
 
-import DTO.ThanhVien;
-import DTO.ThietBi;
+import DTO.ThongTinSD;
+import DTO.XuLy;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,21 +11,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ThanhVienDAO {
+public class XuLyDAO {
     private SessionFactory factory;
-    public ThanhVienDAO(){
+    public XuLyDAO(){
         factory = Util.HibernateUtil.getSessionFactory();
     }
-    public ArrayList<ThanhVien> getData(){
-        ArrayList<ThanhVien> listThanhVien = new ArrayList<>();
+    public ArrayList<XuLy> getData(){
+        ArrayList<XuLy> listXuLy = new ArrayList<>();
         Session session = factory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            List lst= session.createQuery("FROM ThanhVien").list();
+            List lst= session.createQuery("FROM XuLy").list();
             for (Iterator iterator = lst.iterator(); iterator.hasNext();){
-                ThanhVien thanhVien = (ThanhVien) iterator.next();
-                listThanhVien.add(thanhVien);
+                XuLy ttsd = (XuLy) iterator.next();
+                listXuLy.add(ttsd);
             }
         }catch (HibernateException e){
             if (tx != null) tx.rollback();
@@ -33,6 +33,6 @@ public class ThanhVienDAO {
         }finally {
             session.close();
         }
-        return listThanhVien;
+        return listXuLy;
     }
 }
