@@ -19,11 +19,14 @@
         <!-- Show all executed SQL to console -->
         <property name="show_sql">true</property>
         <!-- Entity mapping -->
-        <!-- <mapping class="demopl.DAL.Course" /> -->
+        <mapping class="DTO.ThanhVien" />
+        <mapping class="DTO.ThietBi" />
+        <mapping class="DTO.ThongTinSD" />
+        <mapping class="DTO.XuLy" />
         <!--        <mapping resource = "thietBi.hbm.xml"/>-->
-        <mapping resource="thanhvien.hbm.xml"/>
+        <!-- <mapping resource="thanhvien.hbm.xml"/>
         <mapping resource="thietbi.hbm.xml"/>
         <mapping resource="thongtinsd.hbm.xml"/>
-        <mapping resource="xuly.hbm.xml"/>
+        <mapping resource="xuly.hbm.xml"/> -->
     </session-factory>
 </hibernate-configuration>
