@@ -1,11 +1,21 @@
 package DTO;
-
+import javax.persistence.*;
+@Entity
+@Table(name = "xuly")
 public class XuLy {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MaXL")
     private int maXL;
+    @Column(name = "MaTV")
     private int maTV;
+    @Column(name = "HinhThucXL")
     private String hinhThucXL;
+    @Column(name = "SoTien")
     private Integer soTien;
+    @Column(name = "NgayXL")
     private String ngayXL;
+    @Column(name = "TrangThaiXL")
     private int trangThaiXL;
 
     public XuLy(int maXL, int maTV, String hinhThucXL, Integer soTien, String ngayXL, int trangThaiXL) {

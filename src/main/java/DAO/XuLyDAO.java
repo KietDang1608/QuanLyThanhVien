@@ -2,6 +2,8 @@ package DAO;
 
 import DTO.ThongTinSD;
 import DTO.XuLy;
+import HibernateUtil.HibernateUtil;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,26 +15,14 @@ import java.util.List;
 
 public class XuLyDAO {
     private SessionFactory factory;
-    public XuLyDAO(){
-        factory = Util.HibernateUtil.getSessionFactory();
-    }
-    public ArrayList<XuLy> getData(){
-        ArrayList<XuLy> listXuLy = new ArrayList<>();
-        Session session = factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            List lst= session.createQuery("FROM XuLy").list();
-            for (Iterator iterator = lst.iterator(); iterator.hasNext();){
-                XuLy ttsd = (XuLy) iterator.next();
-                listXuLy.add(ttsd);
-            }
-        }catch (HibernateException e){
-            if (tx != null) tx.rollback();
-            e.printStackTrace();
-        }finally {
-            session.close();
-        }
+     public List<XuLy> getData(){
+        List<XuLy> listXuLy = new ArrayList<>();
+        try(Session session=HibernateUtil.getSessionFactory().openSession();)
+       {
+        session.beginTransaction();
+        listXuLy =session.createQuery("FROM XuLy").list();
+        // session.getTransaction().commit();
+       }
         return listXuLy;
     }
 }

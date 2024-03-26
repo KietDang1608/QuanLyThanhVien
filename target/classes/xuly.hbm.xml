@@ -21,7 +21,7 @@
         <property name = "ngayXL" column = "NgayXL" type = "string"/>
         <property name = "trangThaiXL" column = "TrangThaiXL" type = "int"/>
 
-        <property name="maTV" column="MaTV" type="int"/>
+        <many-to-one name="maTV" column="MaTV" class="DTO.ThanhVien"/>
 
 
     </class>

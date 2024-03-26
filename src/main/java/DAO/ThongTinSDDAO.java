@@ -2,6 +2,8 @@ package DAO;
 
 import DTO.ThanhVien;
 import DTO.ThongTinSD;
+import HibernateUtil.HibernateUtil;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,26 +15,15 @@ import java.util.List;
 
 public class ThongTinSDDAO {
     private SessionFactory factory;
-    public ThongTinSDDAO(){
-        factory = Util.HibernateUtil.getSessionFactory();
-    }
-    public ArrayList<ThongTinSD> getData(){
-        ArrayList<ThongTinSD> listTTSD = new ArrayList<>();
-        Session session = factory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            List lst= session.createQuery("FROM ThongTinSD").list();
-            for (Iterator iterator = lst.iterator(); iterator.hasNext();){
-                ThongTinSD ttsd = (ThongTinSD) iterator.next();
-                listTTSD.add(ttsd);
-            }
-        }catch (HibernateException e){
-            if (tx != null) tx.rollback();
-            e.printStackTrace();
-        }finally {
-            session.close();
-        }
-        return listTTSD;
+    
+    public List<ThongTinSD> getData(){
+        List<ThongTinSD> listThongTinSD = new ArrayList<>();
+        try(Session session=HibernateUtil.getSessionFactory().openSession();)
+       {
+        session.beginTransaction();
+        listThongTinSD =session.createQuery("FROM ThongTinSD").list();
+        // session.getTransaction().commit();
+       }
+        return listThongTinSD;
     }
 }

@@ -1,8 +1,15 @@
 package DTO;
-
+import javax.persistence.*;
+@Entity
+@Table(name = "thietbi")
 public class ThietBi {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MaTB")
     private int maTB;
+    @Column(name = "TenTB")
     private String tenTB;
+    @Column(name = "MoTaTB")
     private String moTa;
 
     public ThietBi(int maTB, String tenTB, String moTa) {
