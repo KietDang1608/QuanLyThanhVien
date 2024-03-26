@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name = "DTO.XuLy" table = "xuly">
+
+        <meta attribute = "class-description">
+            This class contains the department detail.
+        </meta>
+
+
+        <id name = "maXL" type = "int" column = "MaXL">
+            <generator class="native"/>
+        </id>
+
+        <property name = "hinhThucXL" column = "HinhThucXL" type = "string"/>
+        <property name = "soTien" column = "SoTien" type = "int"/>
+        <property name = "ngayXL" column = "NgayXL" type = "string"/>
+        <property name = "trangThaiXL" column = "TrangThaiXL" type = "int"/>
+
+        <many-to-one name="maTV" column="MaTV" class="DTO.ThanhVien"/>
+
+
+    </class>
+</hibernate-mapping>
