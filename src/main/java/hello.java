@@ -1,3 +1,4 @@
+import BUS.ThanhVienBUS;
 import DAO.ThanhVienDAO;
 import DAO.ThietBiDAO;
 import DAO.ThongTinSDDAO;
@@ -30,12 +31,17 @@ public class hello {
         // for (ThongTinSD tt2: new ThongTinSDDAO().getData()){
         //     System.out.println(tt2.toString());
         // }
-        XuLyDAO dao= new XuLyDAO();
-        XuLy xl2= new XuLy(1121530087,"hello", 20002002, null);
-        dao.addXuLy(xl2);
-        for (XuLy xl: new XuLyDAO().getData()){
-            System.out.println(xl.toString());
+        // XuLyDAO dao= new XuLyDAO();
+        // XuLy xl2= new XuLy(1121530087,"hello", 20002002, null);
+        // dao.addXuLy(xl2);
+        // for (XuLy xl: new XuLyDAO().getData()){
+        //     System.out.println(xl.toString());
 
+        // }
+
+        ThanhVienBUS bu= new ThanhVienBUS();
+        for(ThanhVien tv2 : bu.getData()){
+            System.out.println(tv2.toString());
         }
     }
 }

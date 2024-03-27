@@ -30,7 +30,7 @@ public class ThanhVienDAO {
         return new ArrayList<>(listThanhVien);
     }
 
-    public ThanhVien geThanhVienByID(int ID)
+    public ThanhVien getThanhVienByID(int ID)
     {
         ThanhVien tv= session.get(ThanhVien.class, ID);
         session.close();
