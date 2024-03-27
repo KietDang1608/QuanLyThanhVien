@@ -7,13 +7,13 @@ public class ThietBi {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaTB")
     private int maTB;
+   
     @Column(name = "TenTB")
     private String tenTB;
     @Column(name = "MoTaTB")
     private String moTa;
 
-    public ThietBi(int maTB, String tenTB, String moTa) {
-        this.maTB = maTB;
+    public ThietBi(String tenTB, String moTa) {
         this.tenTB = tenTB;
         this.moTa = moTa;
     }

@@ -17,8 +17,7 @@ public class ThanhVien {
     @Column(name = "SDT")
     private int sdt;
 
-    public ThanhVien(int maTV, String hoTen, String khoa, String nganh, int sdt) {
-        this.maTV = maTV;
+    public ThanhVien(String hoTen, String khoa, String nganh, int sdt) {
         this.hoTen = hoTen;
         this.khoa = khoa;
         this.nganh = nganh;
