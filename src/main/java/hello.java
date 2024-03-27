@@ -30,12 +30,16 @@ public class hello {
         // for (ThongTinSD tt2: new ThongTinSDDAO().getData()){
         //     System.out.println(tt2.toString());
         // }
-        XuLyDAO dao= new XuLyDAO();
-        XuLy xl2= new XuLy(1121530087,"hello", 20002002, null);
-        dao.addXuLy(xl2);
-        for (XuLy xl: new XuLyDAO().getData()){
-            System.out.println(xl.toString());
-
+//        XuLyDAO dao= new XuLyDAO();
+//        XuLy xl2= new XuLy(1121530087,"hello", 20002002, null);
+//        dao.addXuLy(xl2);
+//        for (XuLy xl: new XuLyDAO().getData()){
+//            System.out.println(xl.toString());
+//
+//        }
+        ThanhVienDAO thanhVienDAO = new ThanhVienDAO();
+        for (ThanhVien tv: thanhVienDAO.getData()){
+            System.out.println(tv.toString());
         }
     }
 }
