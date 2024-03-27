@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
+import org.hibernate.query.Query;
+
 public class ThietBiDAO {
     private SessionFactory factory;
     private Session session;
@@ -63,6 +66,33 @@ public class ThietBiDAO {
             return false;
         }
     }
+
+    public boolean delThietBiByField(String fieldName, String value) {
+        try {
+            int intValue;
+            try {
+                // Thử chuyển đổi giá trị từ String sang int
+                intValue = Integer.parseInt(value);
+            } catch (NumberFormatException ex) {
+                // Nếu không thể chuyển đổi, giữ nguyên kiểu dữ liệu là String
+                intValue = -1; // hoặc một giá trị khác biểu thị rằng không có giá trị số hợp lệ
+            }
+            
+            Query query = session.createQuery("delete from ThietBi where " + fieldName + " = :value");
+            query.setParameter("value", intValue != -1 ? intValue : value); // Sử dụng giá trị chuỗi nếu không thể chuyển đổi thành số nguyên
+            int result = query.executeUpdate();
+            session.getTransaction().commit();
+            session.close();
+            return result > 0; // Trả về true nếu có ít nhất một dòng bị ảnh hưởng (được xóa)
+        } catch (HibernateException e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     public Boolean updateThietBi(int ID, ThietBi tbNew)
     {

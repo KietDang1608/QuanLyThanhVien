@@ -29,6 +29,13 @@ public class ThietBiBUS {
         
     }
 
+    // public Boolean delThietBiByField(String value)
+    // {
+    //     dao= new ThietBiDAO();
+    //     if(dao.delThietBiByField(value))return true;
+    //     return false;
+    // }
+
     public Boolean updateThietBi(int ID,ThietBi tb)
     {
         dao= new ThietBiDAO();
