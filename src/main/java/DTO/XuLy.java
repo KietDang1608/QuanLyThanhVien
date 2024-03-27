@@ -18,13 +18,11 @@ public class XuLy {
     @Column(name = "TrangThaiXL")
     private int trangThaiXL;
 
-    public XuLy(int maXL, int maTV, String hinhThucXL, Integer soTien, String ngayXL, int trangThaiXL) {
-        this.maXL = maXL;
+    public XuLy( int maTV, String hinhThucXL, Integer soTien, String ngayXL) {
         this.maTV = maTV;
         this.hinhThucXL = hinhThucXL;
         this.soTien = soTien;
         this.ngayXL = ngayXL;
-        this.trangThaiXL = trangThaiXL;
     }
 
     public XuLy() {

@@ -18,8 +18,7 @@ public class ThongTinSD {
     @Column(name = "TGTra")
     private String tgTra;
 
-    public ThongTinSD(int maTT, int maTV, Integer maTB, String tgVao, String tgMuon, String tgTra) {
-        this.maTT = maTT;
+    public ThongTinSD(int maTV, Integer maTB, String tgVao, String tgMuon, String tgTra) {
         this.maTV = maTV;
         this.maTB = maTB;
         this.tgVao = tgVao;
