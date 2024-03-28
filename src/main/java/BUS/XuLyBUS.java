@@ -29,6 +29,13 @@ public class XuLyBUS {
         
     }
 
+    public Boolean delXuLyByField(String fieldName,String value)
+    {
+        dao =new XuLyDAO();
+        if(dao.delXuLyByField(fieldName, value)) return true;
+        return false;
+    }
+
     public Boolean updateXuLy(int ID,XuLy xl)
     {
         dao= new XuLyDAO();

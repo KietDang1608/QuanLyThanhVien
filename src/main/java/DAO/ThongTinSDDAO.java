@@ -63,7 +63,8 @@ public class ThongTinSDDAO {
         }
     }
 
-    public boolean delTTSDByField(String fieldName, String value) {
+    public boolean delTTSDByField(String fieldName, String value) 
+    {
         try {
             int intValue;
             try {

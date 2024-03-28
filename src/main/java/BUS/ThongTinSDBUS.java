@@ -29,6 +29,13 @@ public class ThongTinSDBUS {
         
     }
 
+    public Boolean delTTSDByField(String fieldName,String value)
+    {
+        dao= new ThongTinSDDAO();
+        if(dao.delTTSDByField(fieldName, value)) return true;
+        return false;
+    }
+
     public Boolean updateTTSD(int ID,ThongTinSD tt)
     {
         dao= new ThongTinSDDAO();

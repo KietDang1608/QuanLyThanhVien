@@ -67,7 +67,8 @@ public class ThietBiDAO {
         }
     }
 
-    public boolean delThietBiByField(String fieldName, String value) {
+    public boolean delThietBiByField(String fieldName, String value) 
+    {
         try {
             int intValue;
             try {

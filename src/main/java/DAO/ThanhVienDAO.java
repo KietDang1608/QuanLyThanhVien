@@ -17,6 +17,7 @@ import java.util.List;
 public class ThanhVienDAO {
     private SessionFactory factory;
     private Session session;
+
     public ThanhVienDAO()
     {
         session=HibernateUtil.getSessionFactory().openSession();
@@ -64,7 +65,8 @@ public class ThanhVienDAO {
         }
     }
 
-     public boolean delThanhVienByField(String fieldName, String value) {
+     public boolean delThanhVienByField(String fieldName, String value) 
+     {
         try {
             int intValue;
             try {
@@ -111,4 +113,10 @@ public class ThanhVienDAO {
             return false;
         }
     }
+
+    public void ThemExcel()
+    {
+        
+    }
+
 }

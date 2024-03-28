@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import BUS.ThanhVienBUS;
 import DAO.ThanhVienDAO;
 import DAO.ThietBiDAO;
@@ -11,13 +14,13 @@ import DTO.XuLy;
 
 public class hello {
     public static void main(String[] args) {
-        ThanhVienDAO dao = new ThanhVienDAO();
-        ThanhVien tv= new ThanhVien("tuan hung222","CNTT","Toan",773456788);
+        // ThanhVienDAO dao = new ThanhVienDAO();
+        // ThanhVien tv= new ThanhVien("tuan hung222","CNTT","Toan",773456788);
         // dao.delThanhVienByField("SDT", Integer.toString(773456788));
-        dao= new ThanhVienDAO();
-        for (ThanhVien tv2 : dao.getData()){
-            System.out.println(tv2.toString());
-        }
+        // dao= new ThanhVienDAO();
+        // for (ThanhVien tv2 : dao.getData()){
+        //     System.out.println(tv2.toString());
+        // }
     //     ThietBiDAO dao= new ThietBiDAO();
     //     ThietBi tb= new ThietBi("máy code chay", "code 2000 dòng");
     //     dao.delThietBiByField("TenTB", "máy code chay");
@@ -40,7 +43,19 @@ public class hello {
 
         // }
 
-        // ThanhVienBUS bu= new ThanhVienBUS();
+        ThanhVienBUS bu= new ThanhVienBUS();
+        String excelFilePath = "NiceJavaBooks.xls";
+         
+        try {
+            for(ThanhVien tv2 : bu.ExcelReader(excelFilePath)){
+                System.out.println(tv2.toString());
+                bu.addThanhVien(tv2);
+            }
+            
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         // for(ThanhVien tv2 : bu.getData()){
         //     System.out.println(tv2.toString());
         // }
