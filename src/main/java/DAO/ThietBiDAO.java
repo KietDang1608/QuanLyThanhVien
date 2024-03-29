@@ -19,6 +19,7 @@ import org.hibernate.query.Query;
 public class ThietBiDAO {
     private SessionFactory factory;
     private Session session;
+
     public ThietBiDAO()
     {
         session=HibernateUtil.getSessionFactory().openSession();
@@ -53,6 +54,9 @@ public class ThietBiDAO {
         ThietBi tb = session.get(ThietBi.class, ID);
         if (tb != null) 
         {
+            Query query2 = session.createQuery("delete from ThongTinSD where  MaTB = :value");
+            query2.setParameter("value",ID ); 
+            query2.executeUpdate();
             session.delete(tb);
             session.getTransaction().commit();
             session.close();
@@ -93,7 +97,6 @@ public class ThietBiDAO {
             return false;
         }
     }
-
 
     public Boolean updateThietBi(int ID, ThietBi tbNew)
     {

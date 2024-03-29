@@ -49,12 +49,16 @@ public class ThanhVienDAO {
     }
 
     public Boolean delThanhVien(int ID)
-    {
-        
-        ThanhVien tv = session.get(ThanhVien.class, ID);
+    { 
+        ThanhVien tv = session.get(ThanhVien.class, ID);   
         if (tv != null) 
         {
-           
+            Query query = session.createQuery("delete from XuLy where  MaTV = :value");
+            query.setParameter("value",ID ); 
+            Query query2 = session.createQuery("delete from ThongTinSD where  MaTV = :value");
+            query2.setParameter("value",ID ); 
+            query.executeUpdate();
+            query2.executeUpdate();
             session.delete(tv);
             session.getTransaction().commit();
             session.close();

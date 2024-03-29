@@ -15,24 +15,24 @@ import DTO.XuLy;
 
 public class hello {
     public static void main(String[] args) {
-        ThanhVienDAO dao = new ThanhVienDAO();
+        // ThanhVienDAO dao = new ThanhVienDAO();
        
         // ThanhVien tv= new ThanhVien("tuan hung222","CNTT","Toan",773456788);
-        dao.delThanhVien(1123330257);
-        dao= new ThanhVienDAO();
-        for (ThanhVien tv2 : dao.getData()){
-            System.out.println(tv2.toString());
+        // dao.delThanhVien(1123330257);
+        // dao= new ThanhVienDAO();
+        // for (ThanhVien tv2 : dao.getData()){
+        //     System.out.println(tv2.toString());
+        // }
+        // ThietBiDAO dao= new ThietBiDAO();
+        ThietBiBUS bu= new ThietBiBUS();
+        String excelFilePath = "ThietBi.xls";
+        // ThietBi tb= new ThietBi("máy code chay", "code 2000 dòng");
+        bu.delThietBi(1000002);
+        for(ThietBi tb: bu.getData())
+        {
+            System.out.println(tb.toString());
         }
-    //     ThietBiDAO dao= new ThietBiDAO();
-    //     ThietBiBUS bu= new ThietBiBUS();
-    //     String excelFilePath = "ThietBi.xls";
-    //     ThietBi tb= new ThietBi("máy code chay", "code 2000 dòng");
-    //     dao.delThietBiByField("TenTB", "máy code chay");
-    //     try {
-    //         for(ThietBi tb: bu.ExcelReader(excelFilePath))
-    //         {
-    //             System.out.println(tb.toString());
-    //         }
+      
         
     //     } catch (IOException e) {
     //         // TODO Auto-generated catch block
