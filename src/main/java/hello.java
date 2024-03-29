@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import BUS.ThanhVienBUS;
+import BUS.ThietBiBUS;
 import DAO.ThanhVienDAO;
 import DAO.ThietBiDAO;
 import DAO.ThongTinSDDAO;
@@ -14,17 +15,29 @@ import DTO.XuLy;
 
 public class hello {
     public static void main(String[] args) {
-        // ThanhVienDAO dao = new ThanhVienDAO();
+        ThanhVienDAO dao = new ThanhVienDAO();
+       
         // ThanhVien tv= new ThanhVien("tuan hung222","CNTT","Toan",773456788);
-        // dao.delThanhVienByField("SDT", Integer.toString(773456788));
-        // dao= new ThanhVienDAO();
-        // for (ThanhVien tv2 : dao.getData()){
-        //     System.out.println(tv2.toString());
-        // }
+        dao.delThanhVien(1123330257);
+        dao= new ThanhVienDAO();
+        for (ThanhVien tv2 : dao.getData()){
+            System.out.println(tv2.toString());
+        }
     //     ThietBiDAO dao= new ThietBiDAO();
+    //     ThietBiBUS bu= new ThietBiBUS();
+    //     String excelFilePath = "ThietBi.xls";
     //     ThietBi tb= new ThietBi("máy code chay", "code 2000 dòng");
     //     dao.delThietBiByField("TenTB", "máy code chay");
-    //     dao= new ThietBiDAO();
+    //     try {
+    //         for(ThietBi tb: bu.ExcelReader(excelFilePath))
+    //         {
+    //             System.out.println(tb.toString());
+    //         }
+        
+    //     } catch (IOException e) {
+    //         // TODO Auto-generated catch block
+    //         e.printStackTrace();
+    //     }
     //    for(ThietBi tb2:dao.getData())
     //    {
     //     System.out.println(tb2.toString());
@@ -43,19 +56,19 @@ public class hello {
 
         // }
 
-        ThanhVienBUS bu= new ThanhVienBUS();
-        String excelFilePath = "NiceJavaBooks.xls";
+        // ThanhVienBUS bu= new ThanhVienBUS();
+        // String excelFilePath = "ThietBi.xls";
          
-        try {
-            for(ThanhVien tv2 : bu.ExcelReader(excelFilePath)){
-                System.out.println(tv2.toString());
-                bu.addThanhVien(tv2);
-            }
+        // try {
+        //     for(ThanhVien tv2 : bu.ExcelReader(excelFilePath)){
+        //         System.out.println(tv2.toString());
+        //         bu.addThanhVien(tv2);
+        //     }
             
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        // } catch (IOException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
         // for(ThanhVien tv2 : bu.getData()){
         //     System.out.println(tv2.toString());
         // }

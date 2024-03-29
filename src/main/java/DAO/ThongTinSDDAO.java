@@ -37,6 +37,13 @@ public class ThongTinSDDAO {
         return tt;
     }
 
+    public ThongTinSD geThongTinSDByMaTV(int MaTV)
+    {
+        ThongTinSD tt= session.get(ThongTinSD.class, MaTV);
+        session.close();
+        return tt;
+    }
+
     public void addTTSD(ThongTinSD tt)
     {
         session.save(tt);

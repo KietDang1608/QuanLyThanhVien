@@ -2,6 +2,8 @@ package DAO;
 
 import DTO.ThanhVien;
 import DTO.ThietBi;
+import DTO.ThongTinSD;
+import DTO.XuLy;
 import HibernateUtil.HibernateUtil;
 
 import org.hibernate.HibernateException;
@@ -48,9 +50,11 @@ public class ThanhVienDAO {
 
     public Boolean delThanhVien(int ID)
     {
+        
         ThanhVien tv = session.get(ThanhVien.class, ID);
         if (tv != null) 
         {
+           
             session.delete(tv);
             session.getTransaction().commit();
             session.close();
