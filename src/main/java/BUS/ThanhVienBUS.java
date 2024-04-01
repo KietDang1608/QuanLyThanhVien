@@ -70,13 +70,14 @@ public class ThanhVienBUS {
 
 
     //ghi 1 arraylist vô file excel
-    public void writeExcel(ArrayList<ThanhVien> listTV, String excelFilePath) throws IOException {
+    public void writeExcel(ArrayList<ThanhVien> listTVNew, String excelFilePath) throws IOException 
+    {
     Workbook workbook = new HSSFWorkbook();
     Sheet sheet = workbook.createSheet();
         createHeaderRow(sheet);
     int rowCount = 0;
  
-    for (ThanhVien tv : listTV) {
+    for (ThanhVien tv : listTVNew) {
         Row row = sheet.createRow(++rowCount);
         writeBook(tv, row);
     }
