@@ -38,16 +38,19 @@ public class hello {
         //     // TODO Auto-generated catch block
         //     e.printStackTrace();
         // }
-        // ThietBiDAO dao= new ThietBiDAO();
-        // ThietBiBUS bu= new ThietBiBUS();
+        ThietBiDAO dao= new ThietBiDAO();
+        ThietBiBUS bu= new ThietBiBUS();
+        for(ThietBi tb: bu.ThongKeDangMuonTheoTG("2024-03-01 19:39:21", "2024-04-01 19:39:21"))
+        {
+            System.out.println(tb.toString());
+        }
         // String excelFilePath = "ThietBi.xls";
         // ThietBi tb= new ThietBi("máy code chay", "code 2000 dòng");
-        // bu.delThietBi(1000002);
+        
         // for(ThietBi tb: bu.getData())
         // {
         //     System.out.println(tb.toString());
         // }
-      
         
     //     } catch (IOException e) {
     //         // TODO Auto-generated catch block

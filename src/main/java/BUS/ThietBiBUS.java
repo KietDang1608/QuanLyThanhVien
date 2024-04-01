@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -18,8 +21,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import DAO.ThietBiDAO;
+import DAO.ThongTinSDDAO;
 import DTO.ThanhVien;
 import DTO.ThietBi;
+import DTO.ThongTinSD;
 
 public class ThietBiBUS {
     static ArrayList<ThietBi> listTB;
@@ -146,5 +151,119 @@ public void createHeaderRow(Sheet sheet) {
         return listTBNew;
     }
 
+    public ArrayList<ThietBi>ThongKeByTime(String Ngaybd, String Ngaykt)
+    {
+        ThongTinSDDAO ttsdDAO=new ThongTinSDDAO();
+        ArrayList<ThietBi> kq= new ArrayList<>();
+        int [] MaTB= new int[100];
+        int i=0;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime ngaybd = LocalDateTime.parse(Ngaybd, formatter);
+        LocalDateTime ngaykt = LocalDateTime.parse(Ngaykt, formatter);
+        
+        for(ThongTinSD ttsd: ttsdDAO.getData())
+        {
+            if(ttsd.getTgMuon()!=null)
+            {
+                LocalDateTime tgMuon = LocalDateTime.parse(ttsd.getTgMuon(), formatter);
+                if (ngaybd.compareTo(tgMuon) <= 0 && tgMuon.compareTo(ngaykt) <= 0)
+                {
+                    MaTB[i++]=ttsd.getMaTB();
+                }
+            }
+        }
+
+        dao=new ThietBiDAO();
+        for(ThietBi tb: dao.getData())
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(tb.getMaTB()==MaTB[j]) kq.add(tb);
+            }
+        }
+        return kq;
+    }
+
+    public ArrayList<ThietBi> ThongKeByName(String tenTB)
+    {
+        ThongTinSDDAO ttsdDAO=new ThongTinSDDAO();
+        ArrayList<ThietBi> kq= new ArrayList<>();
+        int [] MaTB= new int[100];
+        int i=0;
+        for(ThongTinSD ttsd: ttsdDAO.getData())
+        {
+            if(ttsd.getTgMuon()!=null)
+            {
+                MaTB[i++]=ttsd.getMaTB();
+            }
+        }
+
+        dao=new ThietBiDAO();
+        for(ThietBi tb: dao.getData())
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(tb.getMaTB()==MaTB[j] &&tb.getTenTB().equals(tenTB)) kq.add(tb);
+            }
+        }
+        return kq;
+    }
+
+    public ArrayList<ThietBi> ThongKeDangMuonTheoTG(String Ngaybd, String Ngaykt)
+    {
+        ThongTinSDDAO ttsdDAO=new ThongTinSDDAO();
+        ArrayList<ThietBi> kq= new ArrayList<>();
+        int [] MaTB= new int[100];
+        int i=0;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime ngaybd = LocalDateTime.parse(Ngaybd, formatter);
+        LocalDateTime ngaykt = LocalDateTime.parse(Ngaykt, formatter);
+        
+        for(ThongTinSD ttsd: ttsdDAO.getData())
+        {
+            if(ttsd.getTgMuon()!=null && ttsd.getTgTra()==null)
+            {
+                LocalDateTime tgMuon = LocalDateTime.parse(ttsd.getTgMuon(), formatter);
+                if (ngaybd.compareTo(tgMuon) <= 0 && tgMuon.compareTo(ngaykt) <= 0)
+                {
+                    MaTB[i++]=ttsd.getMaTB();
+                }
+            }
+        }
+
+        dao=new ThietBiDAO();
+        for(ThietBi tb: dao.getData())
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(tb.getMaTB()==MaTB[j]) kq.add(tb);
+            }
+        }
+        return kq;
+    }
+
+    public ArrayList<ThietBi> ThongKeDangMuon()
+    {
+        ThongTinSDDAO ttsdDAO=new ThongTinSDDAO();
+        ArrayList<ThietBi> kq= new ArrayList<>();
+        int [] MaTB= new int[100];
+        int i=0;
+        for(ThongTinSD ttsd: ttsdDAO.getData())
+        {
+            if(ttsd.getTgMuon()!=null &&ttsd.getTgTra()==null)
+            {
+                MaTB[i++]=ttsd.getMaTB();
+            }
+        }
+        dao=new ThietBiDAO();
+        for(ThietBi tb: dao.getData())
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(tb.getMaTB()==MaTB[j]) kq.add(tb);
+            }
+        }
+        return kq;
+    }
 
 }
