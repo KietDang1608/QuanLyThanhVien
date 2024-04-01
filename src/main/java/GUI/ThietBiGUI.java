@@ -309,7 +309,7 @@ public class ThietBiGUI extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					if(cb.getSelectedItem().equals("TenTB")) {
 						String fileName=cb.getSelectedItem().toString();
-						String dk = txt_modkTB.getText();
+						String dk = txt_modkTB.getText().toLowerCase();
 						bus.delThietBiByField(fileName, dk);
 						reloadTable();
 					}
@@ -332,7 +332,8 @@ public class ThietBiGUI extends JFrame {
 	        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Excel Files", "xls", "xlsx"));
 
 	        // Hiển thị hộp thoại chọn tệp và xử lý khi người dùng chọn một tệp
-	        int result = fileChooser.showOpenDialog(this);
+
+	        int result = fileChooser.showOpenDialog(this.getContentPane());
 	        if (result == JFileChooser.APPROVE_OPTION) {
 	            File selectedFile = fileChooser.getSelectedFile();
 	            String excelFilePath = selectedFile.getAbsolutePath();
