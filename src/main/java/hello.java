@@ -23,6 +23,7 @@ public class hello {
         // for (ThanhVien tv2 : dao.getData()){
         //     System.out.println(tv2.toString());
         // }
+
         // ThietBiDAO dao= new ThietBiDAO();
         ThietBiBUS bu= new ThietBiBUS();
         String excelFilePath = "ThietBi.xls";
@@ -33,6 +34,7 @@ public class hello {
             System.out.println(tb.toString());
         }
       
+
         
     //     } catch (IOException e) {
     //         // TODO Auto-generated catch block
