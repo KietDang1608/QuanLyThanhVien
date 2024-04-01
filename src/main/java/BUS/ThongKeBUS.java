@@ -1,5 +1,6 @@
 package BUS;
 
+import DTO.ThanhVien;
 import DTO.ThietBi;
 import DTO.ThongTinSD;
 
@@ -35,11 +36,36 @@ public class ThongKeBUS {
         return lstFound;
     }
     //Thong ke danh sach thanh vien vao khu vuc hoc tap theo khoa
-//    public ArrayList<ThongTinSD> getDSThanhVienByKhoa(){}
+    public ArrayList<ThongTinSD> getDSThanhVienByKhoa(String khoa){
+        ArrayList<ThongTinSD> lstFound = new ArrayList<>();
+        for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
+            ThanhVien tv = tvBUS.getThanhVienByID(tt.getMaTV());
+            if (tv.getKhoa().contains(khoa)){
+                lstFound.add(tt);
+            }
+        }
+        return lstFound;
+    }
+    // Thong ke danh sach thanh vien vao khu vuc theo nganh
+    public ArrayList<ThongTinSD> getDSTVBYNganh(String nganh){
+        ArrayList<ThongTinSD> lstFound = new ArrayList<>();
+        for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
+            ThanhVien tv = tvBUS.getThanhVienByID(tt.getMaTV());
+            if (tv.getNganh().contains(nganh)){
+                lstFound.add(tt);
+            }
+        }
+        return lstFound;
+    }
     public static void main(String[] args) {
         ThongKeBUS tkbus = new ThongKeBUS();
-        for (ThongTinSD tt : tkbus.getListThanhVienByTime("2024-04-01","2024-04-01","17:00:00","19:00:00")){
+//        for (ThongTinSD tt : tkbus.getListThanhVienByTime("2024-04-01","2024-04-01","17:00:00","19:00:00")){
+//            System.out.println(tt.toString());
+//        }
+        ThanhVienBUS tvBUS = new ThanhVienBUS();
+        for (ThongTinSD tt: tkbus.getDSThanhVienByKhoa("CNTT")){
             System.out.println(tt.toString());
+            System.out.println(tvBUS.getThanhVienByID(tt.getMaTV()).getKhoa());
         }
     }
 }
