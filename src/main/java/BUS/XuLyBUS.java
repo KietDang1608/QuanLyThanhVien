@@ -15,10 +15,11 @@ public class XuLyBUS {
         return listXL;
     }
 
-    public void addXuLy(XuLy xl)
+    public boolean addXuLy(XuLy xl)
     {
         dao=new XuLyDAO();
-        dao.addXuLy(xl);
+        if( dao.addXuLy(xl)) return true;
+        return false;
     }
 
     public Boolean delXuLy(int ID)
