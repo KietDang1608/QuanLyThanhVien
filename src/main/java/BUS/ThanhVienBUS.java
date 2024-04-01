@@ -163,6 +163,15 @@ public void createHeaderRow(Sheet sheet) {
         return listTVNew;
     }
 
-
+    public String getNameByID(int id){
+        String result = "";
+        for (ThanhVien tv: getData()){
+            if (id == tv.getMaTV()){
+                result = tv.getHoTen();
+                return result;
+            }
+        }
+        return result;
+    }
 }
 

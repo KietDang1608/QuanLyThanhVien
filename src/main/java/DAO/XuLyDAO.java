@@ -39,11 +39,17 @@ public class XuLyDAO {
         return xl;
     }
 
-    public void addXuLy(XuLy xl)
+    public boolean addXuLy(XuLy xl)
     {
-        session.save(xl);
-        session.getTransaction().commit();
-        session.close();
+        try {
+            session.save(xl);
+            session.getTransaction().commit();
+            session.close();
+            return true;
+        } catch (Exception e) {
+            // TODO: handle exception
+            return false;
+        }
     }
 
     public Boolean delXuLy(int ID)
