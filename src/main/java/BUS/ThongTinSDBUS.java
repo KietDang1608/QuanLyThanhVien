@@ -23,4 +23,32 @@ public class ThongTinSDBUS {
     public void deleleData(ThongTinSD tt){
         dao.delTTSD(tt.getMaTT());
     }
+    public ArrayList<ThongTinSD> findByID(String data){
+        ArrayList<ThongTinSD> lstTT = new ArrayList<>();
+        for (ThongTinSD tt : listThongTinSD){
+            if (String.valueOf(tt.getMaTT()).contains(data)){
+                lstTT.add(tt);
+            }
+        }
+        return lstTT;
+    }
+    public ArrayList<ThongTinSD> findByIDThanhVien(String data){
+        ArrayList<ThongTinSD> lstTT = new ArrayList<>();
+        for (ThongTinSD tt : listThongTinSD){
+            if (String.valueOf(tt.getMaTV()).contains(data)){
+                lstTT.add(tt);
+            }
+        }
+        return lstTT;
+    }
+    public ArrayList<ThongTinSD> findByIDThietBi(String data){
+        ArrayList<ThongTinSD> lstTT = new ArrayList<>();
+        for (ThongTinSD tt : listThongTinSD){
+            if (String.valueOf(tt.getMaTB()).contains(data)){
+                lstTT.add(tt);
+            }
+        }
+        return lstTT;
+    }
+
 }

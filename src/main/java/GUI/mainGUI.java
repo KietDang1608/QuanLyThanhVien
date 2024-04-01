@@ -67,7 +67,7 @@ public class mainGUI extends JFrame {
 		btnThanhvien.setBackground(new Color(73, 105, 137));
 		btnThanhvien.setBounds(20, 212, 147, 54);
 		panelMenu.add(btnThanhvien);
-		btnThanhvien.setIcon(new ImageIcon("C:\\Users\\DELL\\Desktop\\clone\\QuanLyThanhVien\\src\\main\\java\\IMG\\group.png"));
+		btnThanhvien.setIcon(new ImageIcon("src\\main\\java\\IMG\\group.png"));
 		btnThanhvien.setBorder(null);
 		
 		btnThanhvien.addActionListener(new ActionListener() {
@@ -90,7 +90,7 @@ public class mainGUI extends JFrame {
 		btnThongtinsd.setBackground(new Color(73, 105, 137));
 		btnThongtinsd.setBounds(20, 376, 147, 54);
 		panelMenu.add(btnThongtinsd);
-		btnThongtinsd.setIcon(new ImageIcon("C:\\Users\\DELL\\Desktop\\clone\\QuanLyThanhVien\\src\\main\\java\\IMG\\parchment.png"));
+		btnThongtinsd.setIcon(new ImageIcon("src\\main\\java\\IMG\\parchment.png"));
 		btnThongtinsd.setBorder(null);
 		btnThongtinsd.addActionListener(new ActionListener() {
 			
@@ -107,7 +107,7 @@ public class mainGUI extends JFrame {
 
 		
 		JButton btnThietbi = new JButton("Thiết Bị");
-		btnThietbi.setIcon(new ImageIcon("C:\\Users\\DELL\\Desktop\\clone\\QuanLyThanhVien\\src\\main\\java\\IMG\\device.png"));
+		btnThietbi.setIcon(new ImageIcon("src\\main\\java\\IMG\\device.png"));
 		btnThietbi.setHorizontalAlignment(SwingConstants.LEFT);
 		btnThietbi.setForeground(Color.WHITE);
 		btnThietbi.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -126,7 +126,7 @@ public class mainGUI extends JFrame {
 		});
 		
 		JButton btnXuly = new JButton("Xử Lý");
-		btnXuly.setIcon(new ImageIcon("C:\\Users\\DELL\\Desktop\\clone\\QuanLyThanhVien\\src\\main\\java\\IMG\\crisis-management.png"));
+		btnXuly.setIcon(new ImageIcon("src\\main\\java\\IMG\\crisis-management.png"));
 		btnXuly.setHorizontalAlignment(SwingConstants.LEFT);
 		btnXuly.setForeground(Color.WHITE);
 		btnXuly.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -147,10 +147,10 @@ public class mainGUI extends JFrame {
 		JLabel logo = new JLabel("");
 		logo.setBounds(10, 11, 173, 173);
 		panelMenu.add(logo);
-		logo.setIcon(new ImageIcon("C:\\Users\\DELL\\Desktop\\clone\\QuanLyThanhVien\\src\\main\\java\\IMG\\logo (1).jpg"));
+		logo.setIcon(new ImageIcon("src\\main\\java\\IMG\\logo (1).jpg"));
 		
 		JButton btnThongke = new JButton("Thống Kê");
-		btnThongke.setIcon(new ImageIcon("C:\\Users\\DELL\\Desktop\\clone\\QuanLyThanhVien\\src\\main\\java\\IMG\\description.png"));
+		btnThongke.setIcon(new ImageIcon("src\\main\\java\\IMG\\description.png"));
 		btnThongke.setHorizontalAlignment(SwingConstants.LEFT);
 		btnThongke.setForeground(Color.WHITE);
 		btnThongke.setFont(new Font("Tahoma", Font.PLAIN, 14));
