@@ -15,13 +15,19 @@ public class ThanhVien {
     @Column(name = "Nganh")
     private String nganh;
     @Column(name = "SDT")
-    private int sdt;
+    private String sdt;
+    @Column(name = "Password")
+    private String password;
+    @Column(name = "Email")
+    private String email;
 
-    public ThanhVien(String hoTen, String khoa, String nganh, int sdt) {
+    public ThanhVien(String hoTen, String khoa, String nganh, String sdt,String password,String email) {
         this.hoTen = hoTen;
         this.khoa = khoa;
         this.nganh = nganh;
         this.sdt = sdt;
+        this.password=password;
+        this.email=email;
     }
 
     public ThanhVien() {
@@ -59,12 +65,32 @@ public class ThanhVien {
         this.nganh = nganh;
     }
 
-    public int getSdt() {
+    public String getSdt() {
         return sdt;
     }
 
-    public void setSdt(int sdt) {
+    public void setSdt(String sdt) {
         this.sdt = sdt;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password=password;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email=email;
     }
 
     @Override
@@ -75,6 +101,8 @@ public class ThanhVien {
                 ", khoa='" + khoa + '\'' +
                 ", nganh='" + nganh + '\'' +
                 ", sdt=" + sdt +
+                ", password=" + password +
+                ", email=" + email +
                 '}';
     }
 }
