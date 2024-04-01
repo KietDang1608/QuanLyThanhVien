@@ -3,6 +3,7 @@ package BUS;
 import DTO.ThanhVien;
 import DTO.ThietBi;
 import DTO.ThongTinSD;
+import DTO.XuLy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,14 +11,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ThongKeBUS {
-    private ThongTinSDBUS ttsdBUS = new ThongTinSDBUS();
-    private  ThanhVienBUS tvBUS = new ThanhVienBUS();
-    private XuLyBUS xlBUS  = new XuLyBUS();
-    private ThietBiBUS tbBUS = new ThietBiBUS();
 
     public ThongKeBUS(){}
     //Lấy danh sách thành viên vào khu vực học tập theo thời gian
     public ArrayList<ThongTinSD> getListThanhVienByTime(String startDate, String endDate, String startTime, String endTime){
+        ThongTinSDBUS ttsdBUS = new ThongTinSDBUS();
         //Date : yyyy-mm-dd
         //Time : hh-mm-ss
         ArrayList<ThongTinSD> lstFound = new ArrayList<>();
@@ -37,6 +35,8 @@ public class ThongKeBUS {
     }
     //Thong ke danh sach thanh vien vao khu vuc hoc tap theo khoa
     public ArrayList<ThongTinSD> getDSThanhVienByKhoa(String khoa){
+        ThongTinSDBUS ttsdBUS = new ThongTinSDBUS();
+        ThanhVienBUS tvBUS= new ThanhVienBUS();
         ArrayList<ThongTinSD> lstFound = new ArrayList<>();
         for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
             ThanhVien tv = tvBUS.getThanhVienByID(tt.getMaTV());
@@ -48,6 +48,8 @@ public class ThongKeBUS {
     }
     // Thong ke danh sach thanh vien vao khu vuc theo nganh
     public ArrayList<ThongTinSD> getDSTVBYNganh(String nganh){
+        ThongTinSDBUS ttsdBUS = new ThongTinSDBUS();
+        ThanhVienBUS tvBUS = new ThanhVienBUS();
         ArrayList<ThongTinSD> lstFound = new ArrayList<>();
         for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
             ThanhVien tv = tvBUS.getThanhVienByID(tt.getMaTV());
@@ -56,6 +58,28 @@ public class ThongKeBUS {
             }
         }
         return lstFound;
+    }
+    //Thong ke vi pham
+    //Thong ke vi pham da duoc xu li
+    public ArrayList<XuLy> getDSDaXuLy(){
+        XuLyBUS  xlBUS = new XuLyBUS();
+        ArrayList<XuLy> dsDaXuLy = new ArrayList<>();
+        for (XuLy xl : xlBUS.getData()){
+            if (xl.getTrangThaiXL() == 1){
+                dsDaXuLy.add(xl);
+            }
+        }
+        return dsDaXuLy;
+    }
+    public ArrayList<XuLy> getDSChuaXuLy(){
+        XuLyBUS  xlBUS = new XuLyBUS();
+        ArrayList<XuLy> dsChuaXL = new ArrayList<>();
+        for (XuLy xl : xlBUS.getData()){
+            if (xl.getTrangThaiXL() == 0){
+                dsChuaXL.add(xl);
+            }
+        }
+        return dsChuaXL;
     }
     public static void main(String[] args) {
         ThongKeBUS tkbus = new ThongKeBUS();

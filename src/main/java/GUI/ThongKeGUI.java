@@ -1,23 +1,10 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class ThongKeGUI extends JFrame {
@@ -65,7 +52,19 @@ public class ThongKeGUI extends JFrame {
 		LabelHead.setBounds(462, 11, 219, 53);
 		panelTop.add(LabelHead);
 		
-		
+		JPanel leftMenu = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		leftMenu.setBounds(0,70,150,665-70);
+		contentPane.add(leftMenu);
+		leftMenu.setBackground(new Color(254, 251, 246));
+
+		JButton btnTTSD = new JButton("Thống kê TT sử dụng");
+		leftMenu.add(btnTTSD);
+
+		JButton btnThietBi = new JButton("Thống kê thiết bị");
+		leftMenu.add(btnThietBi);
+
+		JButton btnXuLi = new JButton("Thống kê xử lý");
+		leftMenu.add(btnXuLi);
 	}
 
 }
