@@ -35,7 +35,7 @@ public class ThongKeBUS {
         return lstFound;
     }
     //Thong ke danh sach thanh vien vao khu vuc hoc tap theo khoa
-    public ArrayList<ThongTinSD> getDSThanhVienByKhoa()
+//    public ArrayList<ThongTinSD> getDSThanhVienByKhoa(){}
     public static void main(String[] args) {
         ThongKeBUS tkbus = new ThongKeBUS();
         for (ThongTinSD tt : tkbus.getListThanhVienByTime("2024-04-01","2024-04-01","17:00:00","19:00:00")){
