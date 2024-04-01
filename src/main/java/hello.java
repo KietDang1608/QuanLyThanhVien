@@ -16,22 +16,37 @@ import DTO.XuLy;
 public class hello {
     public static void main(String[] args) {
         // ThanhVienDAO dao = new ThanhVienDAO();
-       
-        // ThanhVien tv= new ThanhVien("tuan hung222","CNTT","Toan",773456788);
-        // dao.delThanhVien(1123330257);
+        // String excelFilePath = "ThanhVien.xls";
+        // ThanhVien tv= new ThanhVien("tuan hung222","CNTT","Toan","073456788","datdat","dat@gmail.com");
+        // ThanhVienBUS bu= new ThanhVienBUS();
+        // try {
+        //     bu.writeExcel(bu.getData(),excelFilePath);
+        // } catch (IOException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
+        
         // dao= new ThanhVienDAO();
-        // for (ThanhVien tv2 : dao.getData()){
-        //     System.out.println(tv2.toString());
+        // try {
+        //     for (ThanhVien tv2 : bu.ExcelReader(excelFilePath)){
+        //         System.out.println(tv2.toString());
+        //     }
+        // } catch (FileNotFoundException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // } catch (IOException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
         // }
         // ThietBiDAO dao= new ThietBiDAO();
-        ThietBiBUS bu= new ThietBiBUS();
-        String excelFilePath = "ThietBi.xls";
+        // ThietBiBUS bu= new ThietBiBUS();
+        // String excelFilePath = "ThietBi.xls";
         // ThietBi tb= new ThietBi("máy code chay", "code 2000 dòng");
-        bu.delThietBi(1000002);
-        for(ThietBi tb: bu.getData())
-        {
-            System.out.println(tb.toString());
-        }
+        // bu.delThietBi(1000002);
+        // for(ThietBi tb: bu.getData())
+        // {
+        //     System.out.println(tb.toString());
+        // }
       
         
     //     } catch (IOException e) {

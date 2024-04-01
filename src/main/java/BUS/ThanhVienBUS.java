@@ -106,6 +106,12 @@ private void writeBook(ThanhVien tv, Row row) {
  
     cell = row.createCell(5);
     cell.setCellValue(tv.getSdt());
+
+    cell = row.createCell(6);
+    cell.setCellValue(tv.getPassword());
+
+    cell = row.createCell(7);
+    cell.setCellValue(tv.getEmail());
 }
 
 public void createHeaderRow(Sheet sheet) {
@@ -137,6 +143,14 @@ public void createHeaderRow(Sheet sheet) {
     Cell cellSDT = row.createCell(5);
     cellSDT.setCellStyle(cellStyle);
     cellSDT.setCellValue("SDT");
+
+    Cell cellPassword = row.createCell(6);
+    cellPassword.setCellStyle(cellStyle);
+    cellPassword.setCellValue("Password");
+
+    Cell cellEmail = row.createCell(7);
+    cellEmail.setCellStyle(cellStyle);
+    cellEmail.setCellValue("Email");
 }
 
 //đọc từ excel ra 1 arraylist
@@ -155,8 +169,9 @@ public void createHeaderRow(Sheet sheet) {
                 tv.setHoTen(currentRow.getCell(2).getStringCellValue());
                 tv.setKhoa(currentRow.getCell(3).getStringCellValue());
                 tv.setNganh(currentRow.getCell(4).getStringCellValue());
-                tv.setSdt((int)(currentRow.getCell(5).getNumericCellValue()));
-
+                tv.setSdt((currentRow.getCell(5).getStringCellValue()));
+                tv.setPassword((currentRow.getCell(6).getStringCellValue()));
+                tv.setEmail((currentRow.getCell(7).getStringCellValue()));
                 listTVNew.add(tv);
             }
         }

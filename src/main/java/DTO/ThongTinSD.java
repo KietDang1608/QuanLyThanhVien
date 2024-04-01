@@ -17,13 +17,16 @@ public class ThongTinSD {
     private String tgMuon;
     @Column(name = "TGTra")
     private String tgTra;
+    @Column(name = "TGDatcho")
+    private String tgDatcho;
 
-    public ThongTinSD(int maTV, Integer maTB, String tgVao, String tgMuon, String tgTra) {
+    public ThongTinSD(int maTV, Integer maTB, String tgVao, String tgMuon, String tgTra,String tgDatcho) {
         this.maTV = maTV;
         this.maTB = maTB;
         this.tgVao = tgVao;
         this.tgMuon = tgMuon;
         this.tgTra = tgTra;
+        this.tgDatcho=tgDatcho;
     }
 
     public ThongTinSD() {
@@ -77,6 +80,16 @@ public class ThongTinSD {
         this.tgTra = tgTra;
     }
 
+    public String getTGDatcho()
+    {
+        return tgDatcho;
+    }
+
+    public void setTGDatcho(String tgDatcho)
+    {
+        this.tgDatcho=tgDatcho;
+    }
+
     @Override
     public String toString() {
         return "ThongTinSD{" +
@@ -86,6 +99,7 @@ public class ThongTinSD {
                 ", tgVao='" + tgVao + '\'' +
                 ", tgMuon='" + tgMuon + '\'' +
                 ", tgTra='" + tgTra + '\'' +
+                ", tgDatcho='" + tgDatcho + '\'' +
                 '}';
     }
 }
