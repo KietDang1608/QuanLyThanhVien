@@ -1,51 +1,54 @@
 package BUS;
 
-import java.util.ArrayList;
 import DAO.ThongTinSDDAO;
 import DTO.ThongTinSD;
 
+import java.util.ArrayList;
+
 public class ThongTinSDBUS {
-    static ArrayList<ThongTinSD> listTT;
-    ThongTinSDDAO dao;
-
-    public ArrayList<ThongTinSD> getData()
-    {
-        dao= new ThongTinSDDAO();
-        listTT=dao.getData();
-        return listTT;
+    private ArrayList<ThongTinSD> listThongTinSD = new ArrayList<>();
+    private ThongTinSDDAO dao = new ThongTinSDDAO();
+    public ThongTinSDBUS(){
+        listThongTinSD = dao.getData();
     }
-
-    public void addTTSD(ThongTinSD tt)
-    {
-        dao=new ThongTinSDDAO();
+    public ArrayList<ThongTinSD> getListThongTinSD(){
+        return listThongTinSD;
+    }
+    public void addData(ThongTinSD tt){
         dao.addTTSD(tt);
     }
-
-    public Boolean delTTSD(int ID)
-    {
-        dao= new ThongTinSDDAO();
-        if( dao.delTTSD(ID)) return true;
-        return false;
-        
+    public void updateData(ThongTinSD tt){
+        dao.updateTTSD(tt.getMaTT(),tt);
+    }
+    public void deleleData(ThongTinSD tt){
+        dao.delTTSD(tt.getMaTT());
+    }
+    public ArrayList<ThongTinSD> findByID(String data){
+        ArrayList<ThongTinSD> lstTT = new ArrayList<>();
+        for (ThongTinSD tt : listThongTinSD){
+            if (String.valueOf(tt.getMaTT()).contains(data)){
+                lstTT.add(tt);
+            }
+        }
+        return lstTT;
+    }
+    public ArrayList<ThongTinSD> findByIDThanhVien(String data){
+        ArrayList<ThongTinSD> lstTT = new ArrayList<>();
+        for (ThongTinSD tt : listThongTinSD){
+            if (String.valueOf(tt.getMaTV()).contains(data)){
+                lstTT.add(tt);
+            }
+        }
+        return lstTT;
+    }
+    public ArrayList<ThongTinSD> findByIDThietBi(String data){
+        ArrayList<ThongTinSD> lstTT = new ArrayList<>();
+        for (ThongTinSD tt : listThongTinSD){
+            if (String.valueOf(tt.getMaTB()).contains(data)){
+                lstTT.add(tt);
+            }
+        }
+        return lstTT;
     }
 
-    public Boolean delTTSDByField(String fieldName,String value)
-    {
-        dao= new ThongTinSDDAO();
-        if(dao.delTTSDByField(fieldName, value)) return true;
-        return false;
-    }
-
-    public Boolean updateTTSD(int ID,ThongTinSD tt)
-    {
-        dao= new ThongTinSDDAO();
-        if(dao.updateTTSD(ID, tt))return true;
-        return false;
-    }
-
-    public ThongTinSD getTTSDByID(int ID)
-    {
-        dao= new ThongTinSDDAO();
-        return dao.geThongTinSDByID(ID); 
-    }
 }
