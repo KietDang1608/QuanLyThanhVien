@@ -57,7 +57,7 @@ public class XuLyGUI extends JFrame {
 	private JTextField txNgayXL;
 	private JTable table;
 	private JRadioButton rdbY, rdbN;
-	private JComboBox cbMaTV;
+	private JComboBox cbMaTV, cbHinhThucXL;
 
 	/**
 	 * Launch the application.
@@ -161,10 +161,25 @@ public class XuLyGUI extends JFrame {
 		txSoTien.setBounds(113, 185, 130, 40);
 		contentPane.add(txSoTien);
 
-		txHinhThucXL = new JTextField();
-		txHinhThucXL.setColumns(10);
-		txHinhThucXL.setBounds(394, 83, 210, 40);
-		contentPane.add(txHinhThucXL);
+		cbHinhThucXL = new JComboBox();
+		cbHinhThucXL.setBounds(394, 83, 210, 40);
+		contentPane.add(cbHinhThucXL);
+		cbHinhThucXL.addItem("Phạt tiền");
+		cbHinhThucXL.addItem("Khóa thẻ 1 tháng");
+		cbHinhThucXL.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(cbHinhThucXL.getSelectedItem().equals("Phạt tiền")) {
+					txSoTien.setEditable(true);
+				}
+				else {
+					txSoTien.setEditable(false);
+				}
+			}
+		});
+
 
 		txTenTV = new JTextField();
 		txTenTV.setColumns(10);
@@ -178,54 +193,54 @@ public class XuLyGUI extends JFrame {
 		contentPane.add(txNgayXL);
 		txNgayXL.setEditable(false);
 
-		JButton btnStartDay = new JButton("");
-		btnStartDay.setBounds(614, 185, 40, 40);
-		contentPane.add(btnStartDay);
-		btnStartDay.setBackground(new Color(240, 240, 240));
-		btnStartDay.setIcon(new ImageIcon("src/main/java/IMG/schedule.png"));
-		btnStartDay.setBorder(BorderFactory.createEmptyBorder());
-		btnStartDay.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// Tạo khung lịch
-				JCalendar calendar = new JCalendar();
-				// Lấy ngày hiện tại
-				Calendar currentDate = Calendar.getInstance();
-				// Chuyển đổi đối tượng Calendar thành đối tượng Date
-				Date date = currentDate.getTime();
-				// Đặt ngày hiện tại cho khung lịch
-				calendar.setDate(date);
-
-				// Tạo dialog để hiển thị khung lịch
-
-				// Tạo hộp thoại
-				JDialog dialog = new JDialog();
-
-				// Đặt mô hình cho hộp thoại
-				dialog.setModal(true);
-				dialog.getContentPane().add(calendar);
-				dialog.setSize(300, 200);
-				dialog.setLocationRelativeTo(contentPane);
-				dialog.setVisible(true);
-
-				// Lấy ngày tháng năm đã chọn
-				int year = calendar.getCalendar().get(Calendar.YEAR);
-				int month = calendar.getCalendar().get(Calendar.MONTH);
-				int day = calendar.getCalendar().get(Calendar.DAY_OF_MONTH);
-
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-				// Hiển thị ngày tháng năm đã chọn lên JTextField
-				// Chuyển đổi định dạng
-				LocalDate lc = LocalDate.of(year, month + 1, day);
-				String formattedDate = lc.format(formatter);
-
-				// Hiển thị ngày tháng năm đã chọn lên JTextField
-				txNgayXL.setForeground(new Color(0, 0, 0));
-				txNgayXL.setText(formattedDate);
-			}
-		});
+//		JButton btnStartDay = new JButton("");
+//		btnStartDay.setBounds(614, 185, 40, 40);
+//		contentPane.add(btnStartDay);
+//		btnStartDay.setBackground(new Color(240, 240, 240));
+//		btnStartDay.setIcon(new ImageIcon("src/main/java/IMG/schedule.png"));
+//		btnStartDay.setBorder(BorderFactory.createEmptyBorder());
+//		btnStartDay.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// Tạo khung lịch
+//				JCalendar calendar = new JCalendar();
+//				// Lấy ngày hiện tại
+//				Calendar currentDate = Calendar.getInstance();
+//				// Chuyển đổi đối tượng Calendar thành đối tượng Date
+//				Date date = currentDate.getTime();
+//				// Đặt ngày hiện tại cho khung lịch
+//				calendar.setDate(date);
+//
+//				// Tạo dialog để hiển thị khung lịch
+//
+//				// Tạo hộp thoại
+//				JDialog dialog = new JDialog();
+//
+//				// Đặt mô hình cho hộp thoại
+//				dialog.setModal(true);
+//				dialog.getContentPane().add(calendar);
+//				dialog.setSize(300, 200);
+//				dialog.setLocationRelativeTo(contentPane);
+//				dialog.setVisible(true);
+//
+//				// Lấy ngày tháng năm đã chọn
+//				int year = calendar.getCalendar().get(Calendar.YEAR);
+//				int month = calendar.getCalendar().get(Calendar.MONTH);
+//				int day = calendar.getCalendar().get(Calendar.DAY_OF_MONTH);
+//
+//				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//
+//				// Hiển thị ngày tháng năm đã chọn lên JTextField
+//				// Chuyển đổi định dạng
+//				LocalDate lc = LocalDate.of(year, month + 1, day);
+//				String formattedDate = lc.format(formatter);
+//
+//				// Hiển thị ngày tháng năm đã chọn lên JTextField
+//				txNgayXL.setForeground(new Color(0, 0, 0));
+//				txNgayXL.setText(formattedDate);
+//			}
+//		});
 
 		JLabel lbTrangThaiXL = new JLabel("Trạng Thái XL");
 		lbTrangThaiXL.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -260,16 +275,25 @@ public class XuLyGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				XuLy xl = new XuLy();
+				LocalDate localDate = LocalDate.now();
 				xl.setMaXL(bus.getData().size()+1);
 				xl.setMaTV(Integer.parseInt(cbMaTV.getSelectedItem().toString()));
-				xl.setHinhThucXL(txHinhThucXL.getText());
-				xl.setSoTien(Integer.parseInt(txSoTien.getText()));
-				xl.setNgayXL(txNgayXL.getText());
+				xl.setHinhThucXL(cbHinhThucXL.getSelectedItem().toString());
+				if(cbHinhThucXL.getSelectedItem().equals("Phạt tiền")) {
+					xl.setSoTien(Integer.parseInt(txSoTien.getText()));
+				}
+				else {
+					xl.setSoTien(0);
+				}
+
+
 				if(rdbY.isSelected()) {
 					xl.setTrangThaiXL(1);
+					xl.setNgayXL(localDate.toString());
 				}
 				else {
 					xl.setTrangThaiXL(0);
+					xl.setNgayXL(null);
 				}
 
 
@@ -294,16 +318,19 @@ public class XuLyGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				XuLy xl = new XuLy();
+				LocalDate localDate = LocalDate.now();
 				xl.setMaXL(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
 				xl.setMaTV(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString()));
 				xl.setHinhThucXL((table.getValueAt(table.getSelectedRow(), 1).toString()));
-				xl.setSoTien(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 4).toString()));
-				xl.setNgayXL((table.getValueAt(table.getSelectedRow(), 5).toString()));
+				xl.setSoTien(Integer.parseInt(txSoTien.getText()));
+//				xl.setNgayXL((table.getValueAt(table.getSelectedRow(), 5).toString()));
 				if(rdbY.isSelected()) {
 					xl.setTrangThaiXL(1);
+					xl.setNgayXL(localDate.toString());
 				}
 				else {
 					xl.setTrangThaiXL(0);
+					xl.setNgayXL(null);
 				}
 
 				boolean success=bus.updateXuLy(xl.getMaXL(),xl);
@@ -408,7 +435,7 @@ public class XuLyGUI extends JFrame {
 		int row = table.getSelectedRow();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		txMaXL.setText(model.getValueAt(row, 0).toString());
-		txHinhThucXL.setText(model.getValueAt(row, 1).toString());
+		cbHinhThucXL.setSelectedItem(model.getValueAt(row, 1));
 		cbMaTV.setSelectedItem(model.getValueAt(row, 2));
 		txTenTV.setText(model.getValueAt(row, 3).toString());
 		txSoTien.setText(model.getValueAt(row, 4).toString());
@@ -420,9 +447,11 @@ public class XuLyGUI extends JFrame {
 		}
 		if(Integer.parseInt(model.getValueAt(row, 6).toString()) == 1) {
 			rdbY.setSelected(true);
+			txSoTien.setEditable(false);
 		}
 		else {
 			rdbN.setSelected(true);
+			txSoTien.setEditable(true);
 		}
 
 	}
