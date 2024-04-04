@@ -42,6 +42,7 @@ import BUS.ThanhVienBUS;
 import BUS.XuLyBUS;
 import DTO.ThanhVien;
 import DTO.XuLy;
+import java.util.ArrayList;
 
 import javax.swing.JRadioButton;
 
@@ -164,8 +165,10 @@ public class XuLyGUI extends JFrame {
 		cbHinhThucXL = new JComboBox();
 		cbHinhThucXL.setBounds(394, 83, 210, 40);
 		contentPane.add(cbHinhThucXL);
+//                cbHinhThucXL.addItem("Mời chọn hình thức XL");
 		cbHinhThucXL.addItem("Phạt tiền");
 		cbHinhThucXL.addItem("Khóa thẻ 1 tháng");
+//                cbHinhThucXL.addItem("Khóa thẻ 2 tháng");
 		cbHinhThucXL.addActionListener(new ActionListener() {
 
 			@Override
@@ -299,11 +302,15 @@ public class XuLyGUI extends JFrame {
 
 				boolean success=bus.addXuLy(xl);
 				if(success) {
+                                    
 					JOptionPane.showMessageDialog(null, "Dữ liệu đã được thêm thành công");
-				} else {
+                                     
+
+                                } else {
 					JOptionPane.showMessageDialog(null, "Dữ liệu không được thêm");
 				}
 				loadData();
+                                   clearInput();
 			}
 		});
 
@@ -319,24 +326,25 @@ public class XuLyGUI extends JFrame {
 				// TODO Auto-generated method stub
 				XuLy xl = new XuLy();
 				LocalDate localDate = LocalDate.now();
-				xl.setMaXL(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
-				xl.setMaTV(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString()));
-				xl.setHinhThucXL((table.getValueAt(table.getSelectedRow(), 1).toString()));
+				xl.setMaXL(Integer.parseInt(txMaXL.getText()));
+				xl.setMaTV((int) cbMaTV.getSelectedItem());
+				xl.setHinhThucXL((String) cbHinhThucXL.getSelectedItem());
 				xl.setSoTien(Integer.parseInt(txSoTien.getText()));
 //				xl.setNgayXL((table.getValueAt(table.getSelectedRow(), 5).toString()));
 				if(rdbY.isSelected()) {
-					xl.setTrangThaiXL(1);
+					xl.setTrangThaiXL(0);
 					xl.setNgayXL(localDate.toString());
 				}
 				else {
-					xl.setTrangThaiXL(0);
+					xl.setTrangThaiXL(1);
 					xl.setNgayXL(null);
 				}
-
+                                System.out.println(xl);
 				boolean success=bus.updateXuLy(xl.getMaXL(),xl);
 				if(success) {
 					JOptionPane.showMessageDialog(null, "Dữ liệu đã được sửa thành công");
-				} else {
+                                        clearInput();
+                                } else {
 					JOptionPane.showMessageDialog(null, "Dữ liệu không được sửa");
 				}
 				loadData();
@@ -405,6 +413,13 @@ public class XuLyGUI extends JFrame {
 		loadData();
 	}
 	public void loadData() {
+            
+            ArrayList <XuLy> xl = (ArrayList<XuLy>) bus.getData();
+            int idNew = xl.get(xl.size() -1).getMaXL();
+            txMaXL.setText(String.valueOf(idNew +1));
+            txMaXL.setEditable(false);
+            
+            
 		DefaultTableModel nModel = new DefaultTableModel();
 		nModel.addColumn("MaXL");
 		nModel.addColumn("HinhThucXL");
@@ -455,4 +470,15 @@ public class XuLyGUI extends JFrame {
 		}
 
 	}
+        
+        
+
+        public void clearInput(){
+            txMaXL.getText();
+            cbMaTV.setSelectedItem("");
+            txTenTV.setText("");
+            cbHinhThucXL.setSelectedItem("");
+            txSoTien.setText("");
+            
+        }
 }
