@@ -42,6 +42,7 @@ import BUS.ThanhVienBUS;
 import BUS.XuLyBUS;
 import DTO.ThanhVien;
 import DTO.XuLy;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.swing.JRadioButton;
@@ -165,10 +166,12 @@ public class XuLyGUI extends JFrame {
 		cbHinhThucXL = new JComboBox();
 		cbHinhThucXL.setBounds(394, 83, 210, 40);
 		contentPane.add(cbHinhThucXL);
-//                cbHinhThucXL.addItem("Mời chọn hình thức XL");
+                cbHinhThucXL.addItem("Mời chọn hình thức XL");
 		cbHinhThucXL.addItem("Phạt tiền");
 		cbHinhThucXL.addItem("Khóa thẻ 1 tháng");
-//                cbHinhThucXL.addItem("Khóa thẻ 2 tháng");
+                cbHinhThucXL.addItem("Khóa thẻ 2 tháng");
+                cbHinhThucXL.addItem("Khóa thẻ vĩnh viễn");
+
 		cbHinhThucXL.addActionListener(new ActionListener() {
 
 			@Override
@@ -179,6 +182,7 @@ public class XuLyGUI extends JFrame {
 				}
 				else {
 					txSoTien.setEditable(false);
+                                        txSoTien.setEnabled(true);
 				}
 			}
 		});
@@ -275,43 +279,101 @@ public class XuLyGUI extends JFrame {
 		btnThem.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				XuLy xl = new XuLy();
-				LocalDate localDate = LocalDate.now();
-				xl.setMaXL(bus.getData().size()+1);
-				xl.setMaTV(Integer.parseInt(cbMaTV.getSelectedItem().toString()));
-				xl.setHinhThucXL(cbHinhThucXL.getSelectedItem().toString());
-				if(cbHinhThucXL.getSelectedItem().equals("Phạt tiền")) {
-					xl.setSoTien(Integer.parseInt(txSoTien.getText()));
-				}
-				else {
-					xl.setSoTien(0);
-				}
+                        public void actionPerformed(ActionEvent e) {
+                            // TODO Auto-generated method stub
+                            XuLy xl = new XuLy();
+                            LocalDate date = LocalDate.now();
+                            xl.setMaXL(bus.getData().size()+1);
+                            xl.setMaTV(Integer.parseInt(cbMaTV.getSelectedItem().toString()));
+                            xl.setHinhThucXL(cbHinhThucXL.getSelectedItem().toString());
+                            xl.setNgayXL(date.toString());
+                            
+                            if(txTenTV.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Vui lòng nhập tên thành viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                            // Kiểm tra nếu combobox cbHinhThucXL đang chọn item "Mời chọn hình thức XL"
+                            if(cbHinhThucXL.getSelectedItem().equals("Mời chọn hình thức XL")) {
+                                JOptionPane.showMessageDialog(null, "Vui lòng chọn hình thức xử lý!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
 
+                            // Kiểm tra hình thức xử lý là "Phạt tiền"
+                            if(cbHinhThucXL.getSelectedItem().equals("Phạt tiền")) {
+                                try {
+                                    int soTien = Integer.parseInt(txSoTien.getText());
+                                    if(soTien <= 0) {
+                                        JOptionPane.showMessageDialog(null, "Số tiền phạt không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                        return;
+                                    }
+                                    xl.setSoTien(soTien);
+                                } catch(NumberFormatException ex) {
+                                    JOptionPane.showMessageDialog(null, "Số tiền phạt không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                    return;
+                                }
+                            } else {
+                                xl.setSoTien(0);
+                            }
 
-				if(rdbY.isSelected()) {
-					xl.setTrangThaiXL(1);
-					xl.setNgayXL(localDate.toString());
-				}
-				else {
-					xl.setTrangThaiXL(0);
-					xl.setNgayXL(null);
-				}
+                            // Kiểm tra trạng thái xử lý
+                            if(rdbY.isSelected()) {
+                                JOptionPane.showMessageDialog(null, "Lỗi vi phạm mới chưa được xử lý!!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            } else {
+                                xl.setTrangThaiXL(1);
+                            }
 
+                            // Thêm xu ly vào cơ sở dữ liệu
+                            boolean success = bus.addXuLy(xl);
+                            if(success) {
+                                JOptionPane.showMessageDialog(null, "Dữ liệu đã được thêm thành công");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Dữ liệu không được thêm");
+                            }
+                            loadData();
+                            clearInput();
+                        }
 
-				boolean success=bus.addXuLy(xl);
-				if(success) {
-                                    
-					JOptionPane.showMessageDialog(null, "Dữ liệu đã được thêm thành công");
-                                     
-
-                                } else {
-					JOptionPane.showMessageDialog(null, "Dữ liệu không được thêm");
-				}
-				loadData();
-                                   clearInput();
-			}
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO Auto-generated method stub
+//				XuLy xl = new XuLy();
+//				LocalDateTime dateTime = LocalDateTime.now();
+//				xl.setMaXL(bus.getData().size()+1);
+//				xl.setMaTV(Integer.parseInt(cbMaTV.getSelectedItem().toString()));
+//				xl.setHinhThucXL(cbHinhThucXL.getSelectedItem().toString());
+//                                xl.setNgayXL(dateTime.toString());
+//				if(cbHinhThucXL.getSelectedItem().equals("Phạt tiền")) {
+//					xl.setSoTien(Integer.parseInt(txSoTien.getText()));
+//				}
+//				else {
+////                                        txSoTien.setText("");
+//					xl.setSoTien(0);
+//				}
+//
+//				if(rdbY.isSelected()) {
+//                                        JOptionPane.showMessageDialog(null, "Lỗi vi phạm mới chưa được xử lý!!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+//                                        return;
+////                                        xl.setTrangThaiXL(0);
+////					xl.setNgayXL(dateTime.toString());
+//				}
+//				else {
+//					xl.setTrangThaiXL(1);
+////					xl.setNgayXL(null);
+//				}
+//
+//
+//				boolean success=bus.addXuLy(xl);
+//				if(success) {
+//                                    
+//					JOptionPane.showMessageDialog(null, "Dữ liệu đã được thêm thành công");
+//                                     
+//
+//                                } else {
+//					JOptionPane.showMessageDialog(null, "Dữ liệu không được thêm");
+//				}
+//				loadData();
+//                                   clearInput();
+//			}
 		});
 
 		JButton btnSua = new JButton("Sửa");
@@ -323,17 +385,24 @@ public class XuLyGUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+                            if(table.getSelectedRow() == -1){
+                                JOptionPane.showMessageDialog(null, "Mời chọn xử lý cần sửa");
+                            }
 				// TODO Auto-generated method stub
 				XuLy xl = new XuLy();
-				LocalDate localDate = LocalDate.now();
+				LocalDate date = LocalDate.now();
 				xl.setMaXL(Integer.parseInt(txMaXL.getText()));
 				xl.setMaTV((int) cbMaTV.getSelectedItem());
+                                cbMaTV.setEditable(false);
+  
 				xl.setHinhThucXL((String) cbHinhThucXL.getSelectedItem());
+                                cbHinhThucXL.setEditable(false);
+
 				xl.setSoTien(Integer.parseInt(txSoTien.getText()));
 //				xl.setNgayXL((table.getValueAt(table.getSelectedRow(), 5).toString()));
 				if(rdbY.isSelected()) {
 					xl.setTrangThaiXL(0);
-					xl.setNgayXL(localDate.toString());
+					xl.setNgayXL(date.toString());
 				}
 				else {
 					xl.setTrangThaiXL(1);
@@ -360,8 +429,13 @@ public class XuLyGUI extends JFrame {
 		btnXoa.addActionListener(new ActionListener() {
 
 			@Override
+                        
+                        
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+                                if(table.getSelectedRow() == -1){
+                                JOptionPane.showMessageDialog(null, "Mời chọn xử lý cần xóa");
+                            }
 				XuLy xl = new XuLy();
 				xl.setMaXL(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
 				boolean success=bus.delXuLy(xl.getMaXL());
@@ -451,22 +525,27 @@ public class XuLyGUI extends JFrame {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		txMaXL.setText(model.getValueAt(row, 0).toString());
 		cbHinhThucXL.setSelectedItem(model.getValueAt(row, 1));
+//                cbHinhThucXL.setEditable(false);
 		cbMaTV.setSelectedItem(model.getValueAt(row, 2));
+//                cbMaTV.setEditable(false);
 		txTenTV.setText(model.getValueAt(row, 3).toString());
 		txSoTien.setText(model.getValueAt(row, 4).toString());
 		if(!Objects.isNull(model.getValueAt(row, 5))){
+                        
 			txNgayXL.setText(model.getValueAt(row, 5).toString());
+
 		}
 		else {
 			txNgayXL.setText("");
 		}
-		if(Integer.parseInt(model.getValueAt(row, 6).toString()) == 1) {
+		if(Integer.parseInt(model.getValueAt(row, 6).toString()) == 0) {
+                   
 			rdbY.setSelected(true);
-			txSoTien.setEditable(false);
+//			txSoTien.setEditable(false);
 		}
 		else {
 			rdbN.setSelected(true);
-			txSoTien.setEditable(true);
+//			txSoTien.setEditable(true);
 		}
 
 	}
@@ -475,10 +554,10 @@ public class XuLyGUI extends JFrame {
 
         public void clearInput(){
             txMaXL.getText();
-            cbMaTV.setSelectedItem("");
+            cbMaTV.setSelectedItem("Mời chọn hình thức XL");
             txTenTV.setText("");
             cbHinhThucXL.setSelectedItem("");
             txSoTien.setText("");
-            
+            rdbN.setSelected(true);
         }
 }
