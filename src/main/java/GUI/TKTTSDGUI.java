@@ -25,6 +25,8 @@ public class TKTTSDGUI extends JFrame {
     private TimePanel pnEndTime;
     private JComboBox<String> khoaCB;
     private JComboBox<String> nganhCB;
+    private JTable tb = new JTable();
+    private JScrollPane scrollPane = new JScrollPane(tb);
     public TKTTSDGUI() {
         // Setting JFrame properties
         setTitle("Thống kê thành viên vào khu học tập");
@@ -153,6 +155,10 @@ public class TKTTSDGUI extends JFrame {
         });
         setDefaultFilter();
 
+        scrollPane.setBounds(10,200,930,300);
+        contentPane.add(scrollPane);
+
+
     }
     private void setDefaultFilter(){
         txtEndDate.setText("All");
@@ -191,4 +197,5 @@ public class TKTTSDGUI extends JFrame {
             gui.setVisible(true);
         });
     }
+
 }
