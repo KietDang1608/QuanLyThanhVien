@@ -1,4 +1,6 @@
 package GUI;
+import BUS.ThanhVienBUS;
+import DTO.ThanhVien;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
@@ -7,10 +9,22 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.Calendar;
 
 
 public class TKTTSDGUI extends JFrame {
     private JPanel contentPane;
+    private String startDate;
+    private String ennDate;
+    private String startTime;
+    private String endTime;
+    private JTextField txtStartDate;
+    private JTextField txtEndDate;
+    private TimePanel pnStartTime;
+    private TimePanel pnEndTime;
+    private JComboBox<String> khoaCB;
+    private JComboBox<String> nganhCB;
     public TKTTSDGUI() {
         // Setting JFrame properties
         setTitle("Thống kê thành viên vào khu học tập");
@@ -21,7 +35,6 @@ public class TKTTSDGUI extends JFrame {
 
         setContentPane(contentPane);
         contentPane.setLayout(null);
-
 
         // Creating and adding labels
         JLabel titleLabel = new JLabel("Thống kê thành viên vào khu học tập");
@@ -36,14 +49,14 @@ public class TKTTSDGUI extends JFrame {
         startDateLabel.setBounds(10, 70, 100, 20);
         contentPane.add(startDateLabel);
 
-        JTextField txtStartDate = new JTextField();
+        txtStartDate = new JTextField();
         txtStartDate.setBounds(120, 70, 150, 20);
         contentPane.add(txtStartDate);
         txtStartDate.setEditable(false);
 
-        JButton startDateButton = new JButton("...");
-        startDateButton.setBounds(270, 70, 20, 20);
-        contentPane.add(startDateButton);
+        JButton btnStartDate = new JButton("...");
+        btnStartDate.setBounds(270, 70, 20, 20);
+        contentPane.add(btnStartDate);
 
 
 
@@ -54,46 +67,124 @@ public class TKTTSDGUI extends JFrame {
         contentPane.add(lb2);
         lb2.setBounds(300,100,50,20);
 
-        TimePanel startTime=new TimePanel();
-        contentPane.add(startTime);
-        startTime.setBounds(300,65,200,25);
+        pnStartTime=new TimePanel();
+        contentPane.add(pnStartTime);
+        pnStartTime.setBounds(300,65,200,25);
 
-        TimePanel endTime=new TimePanel();
-        contentPane.add(endTime);
-        endTime.setBounds(300,95,200,25);
+        pnEndTime=new TimePanel();
+        contentPane.add(pnEndTime);
+        pnEndTime.setBounds(300,95,200,25);
 
         JLabel endDateLabel = new JLabel("Ngày kết thúc:");
         endDateLabel.setBounds(10, 100, 100, 20);
         contentPane.add(endDateLabel);
 
-        JTextField txtEndDate = new JTextField();
+        txtEndDate = new JTextField();
         txtEndDate.setBounds(120, 100, 150, 20);
         contentPane.add(txtEndDate);
         txtEndDate.setEditable(false);
 
-        JButton endDateButton = new JButton("Time");
-        endDateButton.setBounds(270, 100, 20, 20);
-        contentPane.add(endDateButton);
+        JButton btnEndDate = new JButton("Time");
+        btnEndDate.setBounds(270, 100, 20, 20);
+        contentPane.add(btnEndDate);
 
         JLabel facultyLabel = new JLabel("Khoa:");
         facultyLabel.setBounds(10, 130, 100, 20);
         contentPane.add(facultyLabel);
 
-        String[] faculties = {"Faculty 1", "Faculty 2", "Faculty 3"}; // Sample data
-        JComboBox<String> facultyComboBox = new JComboBox<>(faculties);
-        facultyComboBox.setBounds(120, 130, 200, 20);
-        contentPane.add(facultyComboBox);
+        khoaCB = new JComboBox<>();
+        khoaCB.setBounds(120, 130, 200, 20);
+        contentPane.add(khoaCB);
 
         JLabel departmentLabel = new JLabel("Ngành:");
         departmentLabel.setBounds(10, 160, 100, 20);
         contentPane.add(departmentLabel);
 
-        String[] departments = {"Department 1", "Department 2", "Department 3"}; // Sample data
-        JComboBox<String> departmentComboBox = new JComboBox<>(departments);
-        departmentComboBox.setBounds(120, 160, 200, 20);
-        contentPane.add(departmentComboBox);
-    }
+        nganhCB = new JComboBox<>();
+        nganhCB.setBounds(120, 160, 200, 20);
+        contentPane.add(nganhCB);
 
+        addDataToCB();
+
+        JButton btnALl = new JButton("All");
+        JButton btnLoc = new JButton("Lọc");
+        contentPane.add(btnALl);
+        contentPane.add(btnLoc);
+        btnALl.setBounds(10,190,50,20);
+        btnLoc.setBounds(100,190,100,20);
+        btnStartDate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JCalendar calendar = new JCalendar();
+                JDialog dialog = new JDialog(TKTTSDGUI.this,"Chọn ngày bắt đầu",true);
+                dialog.getContentPane().add(calendar);
+                dialog.setSize(300,200);
+                dialog.setVisible(true);
+
+                dialog.setModal(true);
+
+                dialog.setLocationRelativeTo(contentPane);
+                int y = calendar.getCalendar().get(Calendar.YEAR);
+                int m = calendar.getCalendar().get(Calendar.MONTH) + 1;
+                int d = calendar.getCalendar().get(Calendar.DAY_OF_MONTH);
+                String date = formatDate(y,m,d);
+                txtStartDate.setText(date);
+
+            }
+        });
+        btnEndDate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JCalendar calendar = new JCalendar();
+                JDialog dialog = new JDialog(TKTTSDGUI.this,"Chọn ngày kết thúc",true);
+                dialog.getContentPane().add(calendar);
+                dialog.setSize(300,200);
+                dialog.setVisible(true);
+
+                dialog.setModal(true);
+
+                dialog.setLocationRelativeTo(contentPane);
+                int y = calendar.getCalendar().get(Calendar.YEAR);
+                int m = calendar.getCalendar().get(Calendar.MONTH) + 1;
+                int d = calendar.getCalendar().get(Calendar.DAY_OF_MONTH);
+                String date = formatDate(y,m,d);
+                txtEndDate.setText(date);
+            }
+        });
+        setDefaultFilter();
+
+    }
+    private void setDefaultFilter(){
+        txtEndDate.setText("All");
+        txtStartDate.setText("All");
+        pnEndTime.setDefault();
+        pnStartTime.setDefault();
+
+    }
+    private void addDataToCB(){
+        ThanhVienBUS tvBUS = new ThanhVienBUS();
+        khoaCB.addItem("All");
+        nganhCB.addItem("All");
+        for (String khoa : tvBUS.getDSKhoa()){
+            khoaCB.addItem(khoa);
+        }
+        for (String nganh : tvBUS.getDSNganh()){
+            nganhCB.addItem(nganh);
+        }
+    }
+    private String formatDate(int y, int m, int d){
+        String date = "";
+        date += String.valueOf(y) + "-";
+        if (m < 10){
+            date += "0" + String.valueOf(m) + "-";
+        }
+        else date += String.valueOf(m) + "-";
+        if (d < 10){
+            date += "0" + String.valueOf(d);
+        }
+        else date += String.valueOf(d);
+        return date;
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             TKTTSDGUI gui = new TKTTSDGUI();
