@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -67,7 +68,24 @@ public class ThanhVienBUS {
         dao= new ThanhVienDAO();
         return dao.getThanhVienByID(ID);
     }
-
+    public ArrayList<String> getDSKhoa(){
+        HashSet<String> hashSet = new HashSet<>();
+        for (ThanhVien tv:getData()){
+            if (!hashSet.contains(tv.getKhoa())){
+                hashSet.add(tv.getKhoa());
+            }
+        }
+        return new ArrayList<>(hashSet);
+    }
+    public ArrayList<String> getDSNganh(){
+        HashSet<String> hashSet = new HashSet<>();
+        for (ThanhVien tv:getData()){
+            if (!hashSet.contains(tv.getNganh())){
+                hashSet.add(tv.getNganh());
+            }
+        }
+        return new ArrayList<>(hashSet);
+    }
 
     //ghi 1 arraylist vô file excel
     public void writeExcel(ArrayList<ThanhVien> listTVNew, String excelFilePath) throws IOException 

@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
@@ -11,6 +13,8 @@ public class ThongKeGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private TKTTSDGUI ttsd = new TKTTSDGUI();
+	private JFrame pages[] = {ttsd};
 
 	/**
 	 * Launch the application.
@@ -27,7 +31,6 @@ public class ThongKeGUI extends JFrame {
 			}
 		});
 	}
-
 	/**
 	 * Create the frame.
 	 */
@@ -65,6 +68,27 @@ public class ThongKeGUI extends JFrame {
 
 		JButton btnXuLi = new JButton("Thống kê xử lý");
 		leftMenu.add(btnXuLi);
-	}
 
+		JPanel page = new JPanel();
+		page.setLayout(null);
+		page.setBounds(150,70,1092, 595);
+		contentPane.add(page);
+		for (JFrame f : pages){
+			f.getContentPane().setBounds(0,0,1092-150, 595);
+			page.add(f.getContentPane());
+		}
+		btnTTSD.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				toTTSD();
+			}
+		});
+
+	}
+	public void toTTSD(){
+		for (JFrame f : pages){
+			f.getContentPane().setVisible(false);
+		}
+		ttsd.getContentPane().setVisible(true);
+	}
 }
