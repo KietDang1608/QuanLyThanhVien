@@ -42,11 +42,33 @@ public class ThietBiDAO {
         return tb;
     }
 
-    public void addThietBi(ThietBi tb)
+    public void addThietBi(ThietBi tb,String loaiTB)
     {
-        session.save(tb);
-        session.getTransaction().commit();
-        session.close();
+        int loaiTBInt = Integer.parseInt(loaiTB);
+        String hql = "SELECT maTB FROM ThietBi WHERE maTB LIKE '%" + loaiTB + "%' ORDER BY maTB DESC";
+        Query query = session.createQuery(hql);
+        List<Object> results = query.list();
+
+        if (!results.isEmpty()) {
+            Object result = results.get(0);
+            int maTB = (int) result;
+
+            String maTBString = String.valueOf(maTB);
+            String phanConLaiString = maTBString.substring(0, 5);
+            String soCuoiString = maTBString.substring(5);
+            int phanConLai = Integer.parseInt(phanConLaiString);
+            int soCuoi = Integer.parseInt(soCuoiString);
+            soCuoi++;
+            String maTBMoiString = String.valueOf(phanConLai)+String.valueOf(soCuoi);
+            int maTBMoi=Integer.parseInt(maTBMoiString);
+            
+            tb.setMaTB(maTBMoi);
+            session.save(tb);
+            session.getTransaction().commit();
+            session.close();
+        } else {
+            System.out.println("Không tìm thấy kết quả.");
+        }
     }
 
     public Boolean delThietBi(int ID)

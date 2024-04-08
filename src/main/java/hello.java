@@ -14,7 +14,7 @@ import DTO.ThongTinSD;
 import DTO.XuLy;
 
 public class hello {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         // ThanhVienDAO dao = new ThanhVienDAO();
        
         // ThanhVien tv= new ThanhVien("tuan hung222","CNTT","Toan",773456788);
@@ -26,13 +26,14 @@ public class hello {
 
         // ThietBiDAO dao= new ThietBiDAO();
         ThietBiBUS bu= new ThietBiBUS();
+        ThietBi tb=new ThietBi("micro nè", "đây là micro mới");
+        bu.addThietBi(tb, "1", 2020);
         String excelFilePath = "ThietBi.xls";
-        // ThietBi tb= new ThietBi("máy code chay", "code 2000 dòng");
-        bu.delThietBi(1000002);
-        for(ThietBi tb: bu.getData())
-        {
-            System.out.println(tb.toString());
-        }
+        // bu.delThietBi(1000002);
+        // for(ThietBi tb: bu.ExcelReader(excelFilePath))
+        // {
+        //     bu.addThietBi(tb,);
+        // }
       
 
         
