@@ -17,7 +17,7 @@ public class TKTBGUI extends JFrame {
     private TimePanel pnStartTime;
     private TimePanel pnEndTime;
     private JTextField txtTenTB ;
-    private JTable table;
+    private JTable table = new JTable();
     private JScrollPane scrollPane = new JScrollPane(table);
     public TKTBGUI(){
         setBounds(0,0,950, 595);
@@ -47,8 +47,6 @@ public class TKTBGUI extends JFrame {
         JButton btnStartDate = new JButton("...");
         btnStartDate.setBounds(270, 70, 20, 20);
         contentPane.add(btnStartDate);
-
-
 
         JLabel lb1 = new JLabel("Time: ");
         contentPane.add(lb1);
@@ -93,7 +91,6 @@ public class TKTBGUI extends JFrame {
         contentPane.add(btnLoc);
         btnALl.setBounds(10,190,50,20);
         btnLoc.setBounds(100,190,100,20);
-
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(10,220,910,300);
         contentPane.add(scrollPane);
