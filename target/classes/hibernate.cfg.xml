@@ -24,8 +24,8 @@
         <mapping class="DTO.ThongTinSD" />
         <mapping class="DTO.XuLy" />
         <!--        <mapping resource = "thietBi.hbm.xml"/>-->
-        <!-- <mapping resource="thanhvien.hbm.xml"/>
-        <mapping resource="thietbi.hbm.xml"/>
+<!--        <mapping resource="thanhvien.hbm.xml"/>-->
+<!--        <mapping resource="thietbi.hbm.xml"/>
         <mapping resource="thongtinsd.hbm.xml"/>
         <mapping resource="xuly.hbm.xml"/> -->
     </session-factory>

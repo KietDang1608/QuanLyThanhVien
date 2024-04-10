@@ -1,8 +1,6 @@
 package GUI;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
@@ -13,29 +11,12 @@ public class ThongKeGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+
 	private TKTTSDGUI ttsd = new TKTTSDGUI();
 	private TKTBGUI tktb = new TKTBGUI();
 	private TKXLGUI tkxl = new TKXLGUI();
 	private JFrame pages[] = {ttsd,tktb,tkxl};
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ThongKeGUI frame = new ThongKeGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	/**
-	 * Create the frame.
-	 */
 	public ThongKeGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(192, 46, 1092, 665);

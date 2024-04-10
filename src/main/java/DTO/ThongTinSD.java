@@ -1,7 +1,5 @@
 package DTO;
 import javax.persistence.*;
-import java.util.Objects;
-
 @Entity
 @Table(name = "thongtinsd")
 public class ThongTinSD {
@@ -103,18 +101,5 @@ public class ThongTinSD {
                 ", tgTra='" + tgTra + '\'' +
                 ", tgDatcho='" + tgDatcho + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ThongTinSD that = (ThongTinSD) o;
-        return maTT == that.maTT && maTV == that.maTV && Objects.equals(maTB, that.maTB) && Objects.equals(tgVao, that.tgVao) && Objects.equals(tgMuon, that.tgMuon) && Objects.equals(tgTra, that.tgTra) && Objects.equals(tgDatcho, that.tgDatcho);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(maTT, maTV, maTB, tgVao, tgMuon, tgTra, tgDatcho);
     }
 }
