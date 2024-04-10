@@ -227,16 +227,13 @@ public class TKTTSDGUI extends JFrame {
     public static ArrayList<ThongTinSD> layPhanGiao(ArrayList<ThongTinSD>... lists) {
         // Khởi tạo một HashSet để chứa các phần tử chung
         HashSet<ThongTinSD> commonElementsSet = new HashSet<>(lists[0]);
-
         // Duyệt qua từng ArrayList trong danh sách đầu vào
         for (int i = 1; i < lists.length; i++) {
             // Tạo một HashSet tạm thời chứa phần tử của ArrayList hiện tại
             HashSet<ThongTinSD> currentListSet = new HashSet<>(lists[i]);
-
             // Giữ lại các phần tử chung với commonElementsSet
             commonElementsSet.retainAll(currentListSet);
         }
-
         // Chuyển đổi HashSet thành ArrayList và trả về
         return new ArrayList<>(commonElementsSet);
     }
