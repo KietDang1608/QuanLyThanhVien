@@ -1,13 +1,14 @@
 package GUI;
 
-import java.awt.*;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class ThongKeGUI extends JFrame {
+public class ThanhVienn extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -19,7 +20,7 @@ public class ThongKeGUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ThongKeGUI frame = new ThongKeGUI();
+					ThanhVienn frame = new ThanhVienn();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +32,7 @@ public class ThongKeGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ThongKeGUI() {
+	public ThanhVienn() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(192, 46, 1092, 665);
 		contentPane = new JPanel();
@@ -46,25 +47,13 @@ public class ThongKeGUI extends JFrame {
 		contentPane.add(panelTop);
 		panelTop.setLayout(null);
 		
-		JLabel LabelHead = new JLabel("THỐNG KÊ");
+		JLabel LabelHead = new JLabel("THÀNH VIÊN");
 		LabelHead.setForeground(new Color(255, 255, 255));
 		LabelHead.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		LabelHead.setBounds(462, 11, 219, 53);
 		panelTop.add(LabelHead);
 		
-		JPanel leftMenu = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		leftMenu.setBounds(0,70,150,665-70);
-		contentPane.add(leftMenu);
-		leftMenu.setBackground(new Color(254, 251, 246));
-
-		JButton btnTTSD = new JButton("Thống kê TT sử dụng");
-		leftMenu.add(btnTTSD);
-
-		JButton btnThietBi = new JButton("Thống kê thiết bị");
-		leftMenu.add(btnThietBi);
-
-		JButton btnXuLi = new JButton("Thống kê xử lý");
-		leftMenu.add(btnXuLi);
+		
 	}
 
 }

@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -17,17 +16,14 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import DAO.ThanhVienDAO;
 import DTO.ThanhVien;
 
 public class ThanhVienBUS {
-    static ArrayList<ThanhVien> listTV;
+    public static ArrayList<ThanhVien> listTV;
     ThanhVienDAO dao;
-
+    
     public ArrayList<ThanhVien> getData()
     {
         dao= new ThanhVienDAO();
@@ -56,11 +52,10 @@ public class ThanhVienBUS {
         return false;
     }
 
-    public Boolean updateThanhVien(int ID,ThanhVien tv)
+    public Boolean updateThanhVien(int ID, String hoTen, String khoa, String nganh, String sdt, String password, String email)
     {
         dao= new ThanhVienDAO();
-        if(dao.updateThanhVien(ID, tv))return true;
-        return false;
+        return dao.updateThanhVien(ID, hoTen, khoa, nganh, sdt, password, email);
     }
 
     public ThanhVien getThanhVienByID(int ID)
@@ -68,45 +63,8 @@ public class ThanhVienBUS {
         dao= new ThanhVienDAO();
         return dao.getThanhVienByID(ID);
     }
-    public ArrayList<String> getDSKhoa(){
-        HashSet<String> hashSet = new HashSet<>();
-        for (ThanhVien tv:getData()){
-            if (!hashSet.contains(tv.getKhoa())){
-                hashSet.add(tv.getKhoa());
-            }
-        }
-        return new ArrayList<>(hashSet);
-    }
-    public ArrayList<String> getDSNganh(){
-        HashSet<String> hashSet = new HashSet<>();
-        for (ThanhVien tv:getData()){
-            if (!hashSet.contains(tv.getNganh())){
-                hashSet.add(tv.getNganh());
-            }
-        }
-        return new ArrayList<>(hashSet);
-    }
-    public String getNganhByID(int id){
-        for (ThanhVien tv : getData()){
-            if (tv.getMaTV() == id)
-                return tv.getNganh();
-        }
-        return "";
-    }
-    public String getKhoaByID(int id){
-        for (ThanhVien tv : getData()){
-            if (tv.getMaTV() == id)
-                return tv.getKhoa();
-        }
-        return "";
-    }
-    public String getTenByID(int id){
-        for (ThanhVien tv : getData()){
-            if (tv.getMaTV() == id)
-                return tv.getHoTen();
-        }
-        return "";
-    }
+
+
     //ghi 1 arraylist vô file excel
     public void writeExcel(ArrayList<ThanhVien> listTVNew, String excelFilePath) throws IOException 
     {
