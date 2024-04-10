@@ -86,7 +86,27 @@ public class ThanhVienBUS {
         }
         return new ArrayList<>(hashSet);
     }
-
+    public String getNganhByID(int id){
+        for (ThanhVien tv : getData()){
+            if (tv.getMaTV() == id)
+                return tv.getNganh();
+        }
+        return "";
+    }
+    public String getKhoaByID(int id){
+        for (ThanhVien tv : getData()){
+            if (tv.getMaTV() == id)
+                return tv.getKhoa();
+        }
+        return "";
+    }
+    public String getTenByID(int id){
+        for (ThanhVien tv : getData()){
+            if (tv.getMaTV() == id)
+                return tv.getHoTen();
+        }
+        return "";
+    }
     //ghi 1 arraylist vô file excel
     public void writeExcel(ArrayList<ThanhVien> listTVNew, String excelFilePath) throws IOException 
     {
