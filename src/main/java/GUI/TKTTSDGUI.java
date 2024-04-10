@@ -1,16 +1,23 @@
 package GUI;
 import BUS.ThanhVienBUS;
+import BUS.ThongKeBUS;
+import BUS.ThongTinSDBUS;
 import DTO.ThanhVien;
+import DTO.ThongTinSD;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Vector;
 
 
 public class TKTTSDGUI extends JFrame {
@@ -25,6 +32,9 @@ public class TKTTSDGUI extends JFrame {
     private TimePanel pnEndTime;
     private JComboBox<String> khoaCB;
     private JComboBox<String> nganhCB;
+    private ThongKeBUS tkBUS = new ThongKeBUS();
+    private JTable tb = new JTable();
+    private JScrollPane scrollPane = new JScrollPane(tb);
     public TKTTSDGUI() {
         // Setting JFrame properties
         setTitle("Thống kê thành viên vào khu học tập");
@@ -132,6 +142,8 @@ public class TKTTSDGUI extends JFrame {
 
             }
         });
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
         btnEndDate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -153,13 +165,80 @@ public class TKTTSDGUI extends JFrame {
         });
         setDefaultFilter();
 
+        scrollPane.setBounds(10,220,910,300);
+        contentPane.add(scrollPane);
+
+        btnALl.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setDefaultFilter();
+            }
+        });
+        btnLoc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<ThongTinSD> lstFound = new ArrayList<>();
+                lstFound.addAll(locThongke());
+                addDataToTable(lstFound);
+            }
+        });
     }
     private void setDefaultFilter(){
+        ThongTinSDBUS ttsdBUS = new ThongTinSDBUS();
         txtEndDate.setText("All");
         txtStartDate.setText("All");
         pnEndTime.setDefault();
         pnStartTime.setDefault();
+        addDataToTable(ttsdBUS.getListThongTinSD());
 
+    }
+    private ArrayList<ThongTinSD> locThongke() {
+        ThongTinSDBUS ttBUS = new ThongTinSDBUS();
+        ArrayList<ThongTinSD> lstTT = ttBUS.getListThongTinSD();
+        ArrayList<ThongTinSD> lstTheoNgayBD = ttBUS.getListThongTinSD();
+        ArrayList<ThongTinSD> lstTheoNgayKT = ttBUS.getListThongTinSD();
+        ArrayList<ThongTinSD> lstTheoKhoa = ttBUS.getListThongTinSD();
+        ArrayList<ThongTinSD> lstTheoNganh = ttBUS.getListThongTinSD();
+
+        // Lọc theo ngày bắt đầu
+        if (!txtStartDate.getText().equals("All")) {
+            lstTheoNgayBD = tkBUS.getListTTSDFromStart(txtStartDate.getText(), pnStartTime.getSelectedTime());
+        }
+
+//        // Lọc theo ngày kết thúc
+        if (!txtEndDate.getText().equals("All")) {
+            lstTheoNgayKT = tkBUS.getListTTSDBeforeEnd(txtEndDate.getText(), pnEndTime.getSelectedTime());
+        }
+//
+//        // Lọc theo khoa
+        if (khoaCB.getSelectedIndex() != 0) {
+            lstTheoKhoa = tkBUS.getDSThanhVienByKhoa(String.valueOf(khoaCB.getSelectedItem()));
+        }
+//
+//        // Lọc theo ngành
+        if (nganhCB.getSelectedIndex() != 0) {
+            lstTheoNganh = tkBUS.getDSTVBYNganh(String.valueOf(nganhCB.getSelectedItem()));
+        }
+
+        // Gộp các danh sách lại và trả về kết quả
+        return layPhanGiao(lstTT, lstTheoNgayBD,lstTheoNgayKT,lstTheoKhoa,lstTheoNganh);
+    }
+
+    public static ArrayList<ThongTinSD> layPhanGiao(ArrayList<ThongTinSD>... lists) {
+        // Khởi tạo một HashSet để chứa các phần tử chung
+        HashSet<ThongTinSD> commonElementsSet = new HashSet<>(lists[0]);
+
+        // Duyệt qua từng ArrayList trong danh sách đầu vào
+        for (int i = 1; i < lists.length; i++) {
+            // Tạo một HashSet tạm thời chứa phần tử của ArrayList hiện tại
+            HashSet<ThongTinSD> currentListSet = new HashSet<>(lists[i]);
+
+            // Giữ lại các phần tử chung với commonElementsSet
+            commonElementsSet.retainAll(currentListSet);
+        }
+
+        // Chuyển đổi HashSet thành ArrayList và trả về
+        return new ArrayList<>(commonElementsSet);
     }
     private void addDataToCB(){
         ThanhVienBUS tvBUS = new ThanhVienBUS();
@@ -185,10 +264,38 @@ public class TKTTSDGUI extends JFrame {
         else date += String.valueOf(d);
         return date;
     }
+    public void addDataToTable(ArrayList<ThongTinSD> ttsdLIST){
+        DefaultTableModel nmodel = new DefaultTableModel();
+        nmodel.addColumn("STT");
+        nmodel.addColumn("Mã TV");
+        nmodel.addColumn("Tên TV");
+        nmodel.addColumn("Khoa");
+        nmodel.addColumn("Ngành");
+//        nmodel.addColumn("maTB",new Object[] {"Mã TB"});
+//        nmodel.addColumn("tenTB",new Object[] {"Tên TB"});
+        nmodel.addColumn("Thời gian vào");
+
+//        nmodel.addColumn("tgm",new Object[] {"TG mượn"});
+//        nmodel.addColumn("tgt",new Object[] {"TG trả"});
+        ThanhVienBUS tvBUS = new ThanhVienBUS();
+        int i = 1;
+        for (ThongTinSD tt : ttsdLIST){
+            Vector vt = new Vector<>();
+            vt.add(i++);
+            vt.add(tt.getMaTV());
+            vt.add(tvBUS.getTenByID(tt.getMaTV()));
+            vt.add(tvBUS.getKhoaByID(tt.getMaTV()));
+            vt.add(tvBUS.getNganhByID(tt.getMaTV()));
+            vt.add(tt.getTgVao());
+            nmodel.addRow(vt);
+        }
+        tb.setModel(nmodel);
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             TKTTSDGUI gui = new TKTTSDGUI();
             gui.setVisible(true);
         });
     }
+
 }
