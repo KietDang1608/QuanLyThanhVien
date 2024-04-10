@@ -94,10 +94,70 @@ public class TKTTSDGUI extends JFrame {
         contentPane.add(departmentComboBox);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            TKTTSDGUI gui = new TKTTSDGUI();
-            gui.setVisible(true);
-        });
+
+    public ArrayList<ThongTinSD> layPhanGiao(ArrayList<ThongTinSD>... lists) {
+        // Khởi tạo một HashSet để chứa các phần tử chung
+        HashSet<ThongTinSD> commonElementsSet = new HashSet<>(lists[0]);
+        // Duyệt qua từng ArrayList trong danh sách đầu vào
+        for (int i = 1; i < lists.length; i++) {
+            // Tạo một HashSet tạm thời chứa phần tử của ArrayList hiện tại
+            HashSet<ThongTinSD> currentListSet = new HashSet<>(lists[i]);
+            // Giữ lại các phần tử chung với commonElementsSet
+            commonElementsSet.retainAll(currentListSet);
+        }
+        // Chuyển đổi HashSet thành ArrayList và trả về
+        return new ArrayList<>(commonElementsSet);
     }
+    private void addDataToCB(){
+        ThanhVienBUS tvBUS = new ThanhVienBUS();
+        khoaCB.addItem("All");
+        nganhCB.addItem("All");
+        for (String khoa : tvBUS.getDSKhoa()){
+            khoaCB.addItem(khoa);
+        }
+        for (String nganh : tvBUS.getDSNganh()){
+            nganhCB.addItem(nganh);
+        }
+    }
+    private String formatDate(int y, int m, int d){
+        String date = "";
+        date += String.valueOf(y) + "-";
+        if (m < 10){
+            date += "0" + String.valueOf(m) + "-";
+        }
+        else date += String.valueOf(m) + "-";
+        if (d < 10){
+            date += "0" + String.valueOf(d);
+        }
+        else date += String.valueOf(d);
+        return date;
+    }
+    public void addDataToTable(ArrayList<ThongTinSD> ttsdLIST){
+        DefaultTableModel nmodel = new DefaultTableModel();
+        nmodel.addColumn("STT");
+        nmodel.addColumn("Mã TV");
+        nmodel.addColumn("Tên TV");
+        nmodel.addColumn("Khoa");
+        nmodel.addColumn("Ngành");
+//        nmodel.addColumn("maTB",new Object[] {"Mã TB"});
+//        nmodel.addColumn("tenTB",new Object[] {"Tên TB"});
+        nmodel.addColumn("Thời gian vào");
+
+//        nmodel.addColumn("tgm",new Object[] {"TG mượn"});
+//        nmodel.addColumn("tgt",new Object[] {"TG trả"});
+        ThanhVienBUS tvBUS = new ThanhVienBUS();
+        int i = 1;
+        for (ThongTinSD tt : ttsdLIST){
+            Vector vt = new Vector<>();
+            vt.add(i++);
+            vt.add(tt.getMaTV());
+            vt.add(tvBUS.getTenByID(tt.getMaTV()));
+            vt.add(tvBUS.getKhoaByID(tt.getMaTV()));
+            vt.add(tvBUS.getNganhByID(tt.getMaTV()));
+            vt.add(tt.getTgVao());
+            nmodel.addRow(vt);
+        }
+        tb.setModel(nmodel);
+    }
+    
 }

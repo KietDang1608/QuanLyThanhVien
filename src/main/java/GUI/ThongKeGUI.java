@@ -12,25 +12,11 @@ public class ThongKeGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ThongKeGUI frame = new ThongKeGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private TKTTSDGUI ttsd = new TKTTSDGUI();
+	private TKTBGUI tktb = new TKTBGUI();
+	private TKXLGUI tkxl = new TKXLGUI();
+	private JFrame pages[] = {ttsd,tktb,tkxl};
 
-	/**
-	 * Create the frame.
-	 */
 	public ThongKeGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(192, 46, 1092, 665);
@@ -65,6 +51,52 @@ public class ThongKeGUI extends JFrame {
 
 		JButton btnXuLi = new JButton("Thống kê xử lý");
 		leftMenu.add(btnXuLi);
+		btnThietBi.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				toTKTB();
+			}
+		});
+		JPanel page = new JPanel();
+		page.setLayout(null);
+		page.setBounds(150,70,1092, 595);
+		contentPane.add(page);
+		for (JFrame f : pages){
+			f.getContentPane().setBounds(0,0,1092-150, 595);
+			page.add(f.getContentPane());
+			f.getContentPane().setVisible(false);
+		}
+		btnTTSD.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				toTTSD();
+			}
+		});
+		btnXuLi.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				toTKXL();
+			}
+		});
+		toTTSD();
 	}
+	public void toTTSD(){
+		for (JFrame f : pages){
+			f.getContentPane().setVisible(false);
+		}
+		ttsd.getContentPane().setVisible(true);
+	}
+	public void toTKTB(){
 
+		for (JFrame f : pages){
+			f.getContentPane().setVisible(false);
+		}
+		tktb.getContentPane().setVisible(true);
+	}
+	public void toTKXL(){
+		for (JFrame f : pages){
+			f.getContentPane().setVisible(false);
+		}
+		tkxl.getContentPane().setVisible(true);
+	}
 }
