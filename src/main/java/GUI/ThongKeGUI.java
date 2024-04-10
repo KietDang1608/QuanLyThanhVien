@@ -14,7 +14,8 @@ public class ThongKeGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private TKTTSDGUI ttsd = new TKTTSDGUI();
-	private JFrame pages[] = {ttsd};
+	private TKTBGUI tktb = new TKTBGUI();
+	private JFrame pages[] = {ttsd,tktb};
 
 	/**
 	 * Launch the application.
@@ -68,7 +69,12 @@ public class ThongKeGUI extends JFrame {
 
 		JButton btnXuLi = new JButton("Thống kê xử lý");
 		leftMenu.add(btnXuLi);
-
+		btnThietBi.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				toTKTB();
+			}
+		});
 		JPanel page = new JPanel();
 		page.setLayout(null);
 		page.setBounds(150,70,1092, 595);
@@ -90,5 +96,12 @@ public class ThongKeGUI extends JFrame {
 			f.getContentPane().setVisible(false);
 		}
 		ttsd.getContentPane().setVisible(true);
+	}
+	public void toTKTB(){
+
+		for (JFrame f : pages){
+			f.getContentPane().setVisible(false);
+		}
+		tktb.getContentPane().setVisible(true);
 	}
 }
