@@ -16,17 +16,14 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import DAO.ThanhVienDAO;
 import DTO.ThanhVien;
 
 public class ThanhVienBUS {
-    static ArrayList<ThanhVien> listTV;
+    public static ArrayList<ThanhVien> listTV;
     ThanhVienDAO dao;
-
+    
     public ArrayList<ThanhVien> getData()
     {
         dao= new ThanhVienDAO();
@@ -55,11 +52,10 @@ public class ThanhVienBUS {
         return false;
     }
 
-    public Boolean updateThanhVien(int ID,ThanhVien tv)
+    public Boolean updateThanhVien(int ID, String hoTen, String khoa, String nganh, String sdt, String password, String email)
     {
         dao= new ThanhVienDAO();
-        if(dao.updateThanhVien(ID, tv))return true;
-        return false;
+        return dao.updateThanhVien(ID, hoTen, khoa, nganh, sdt, password, email);
     }
 
     public ThanhVien getThanhVienByID(int ID)

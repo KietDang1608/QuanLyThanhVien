@@ -152,12 +152,10 @@ public void createHeaderRow(Sheet sheet) {
         return listTBNew;
     }
 
-    public ArrayList<ThietBi>ThongKeByTime(String Ngaybd, String Ngaykt)
+    public ArrayList<ThongTinSD>ThongKeByTime(String Ngaybd, String Ngaykt)
     {
         ThongTinSDDAO ttsdDAO=new ThongTinSDDAO();
-        ArrayList<ThietBi> kq= new ArrayList<>();
-        int [] MaTB= new int[100];
-        int i=0;
+        ArrayList<ThongTinSD> kq= new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime ngaybd = LocalDateTime.parse(Ngaybd, formatter);
         LocalDateTime ngaykt = LocalDateTime.parse(Ngaykt, formatter);
@@ -169,57 +167,77 @@ public void createHeaderRow(Sheet sheet) {
                 LocalDateTime tgMuon = LocalDateTime.parse(ttsd.getTgMuon(), formatter);
                 if (ngaybd.compareTo(tgMuon) <= 0 && tgMuon.compareTo(ngaykt) <= 0)
                 {
-                    MaTB[i++]=ttsd.getMaTB();
+                    kq.add(ttsd);
                 }
-            }
-        }
-
-        dao=new ThietBiDAO();
-        for(ThietBi tb: dao.getData())
-        {
-            for(int j=0;j<i;j++)
-            {
-                if(tb.getMaTB()==MaTB[j]) kq.add(tb);
             }
         }
         return kq;
     }
-
-    public ArrayList<ThietBi> ThongKeByName(String tenTB)
+    public ArrayList<ThongTinSD>ThongKeByStartDate(String Ngaybd)
     {
         ThongTinSDDAO ttsdDAO=new ThongTinSDDAO();
-        ArrayList<ThietBi> kq= new ArrayList<>();
-        int [] MaTB= new int[100];
-        int i=0;
+        ArrayList<ThongTinSD> kq= new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime ngaybd = LocalDateTime.parse(Ngaybd, formatter);
+
         for(ThongTinSD ttsd: ttsdDAO.getData())
         {
             if(ttsd.getTgMuon()!=null)
             {
-                MaTB[i++]=ttsd.getMaTB();
+                LocalDateTime tgMuon = LocalDateTime.parse(ttsd.getTgMuon(), formatter);
+                if (ngaybd.compareTo(tgMuon) <= 0)
+                {
+                    kq.add(ttsd);
+                }
             }
         }
+        return kq;
+    }
+    public ArrayList<ThongTinSD>ThongKeByEndDate(String Ngaykt)
+    {
+        ThongTinSDDAO ttsdDAO=new ThongTinSDDAO();
+        ArrayList<ThongTinSD> kq= new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime ngaykt = LocalDateTime.parse(Ngaykt, formatter);
 
-        dao=new ThietBiDAO();
-        for(ThietBi tb: dao.getData())
+        for(ThongTinSD ttsd: ttsdDAO.getData())
         {
-            for(int j=0;j<i;j++)
+            if(ttsd.getTgMuon()!=null)
             {
-                if(tb.getMaTB()==MaTB[j] &&tb.getTenTB().equals(tenTB)) kq.add(tb);
+                LocalDateTime tgMuon = LocalDateTime.parse(ttsd.getTgMuon(), formatter);
+                if (ngaykt.compareTo(tgMuon) > 0)
+                {
+                    kq.add(ttsd);
+                }
             }
         }
         return kq;
     }
 
-    public ArrayList<ThietBi> ThongKeDangMuonTheoTG(String Ngaybd, String Ngaykt)
+    public ArrayList<ThongTinSD> ThongKeByName(String tenTB)
     {
         ThongTinSDDAO ttsdDAO=new ThongTinSDDAO();
-        ArrayList<ThietBi> kq= new ArrayList<>();
-        int [] MaTB= new int[100];
-        int i=0;
+        ArrayList<ThongTinSD> kq= new ArrayList<>();
+
+        for(ThongTinSD ttsd: ttsdDAO.getData())
+        {
+            if(ttsd.getTgMuon()!=null)
+            {
+                dao=new ThietBiDAO();
+                if(dao.geThietBiByID(ttsd.getMaTB()).getTenTB().contains(tenTB))
+                    kq.add(ttsd);
+            }
+        }
+        return kq;
+    }
+    public ArrayList<ThongTinSD> ThongKeDangMuonTheoTG(String Ngaybd, String Ngaykt)
+    {
+        ThongTinSDDAO ttsdDAO=new ThongTinSDDAO();
+        ArrayList<ThongTinSD> kq= new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime ngaybd = LocalDateTime.parse(Ngaybd, formatter);
         LocalDateTime ngaykt = LocalDateTime.parse(Ngaykt, formatter);
-        
+
         for(ThongTinSD ttsd: ttsdDAO.getData())
         {
             if(ttsd.getTgMuon()!=null && ttsd.getTgTra()==null)
@@ -227,43 +245,24 @@ public void createHeaderRow(Sheet sheet) {
                 LocalDateTime tgMuon = LocalDateTime.parse(ttsd.getTgMuon(), formatter);
                 if (ngaybd.compareTo(tgMuon) <= 0 && tgMuon.compareTo(ngaykt) <= 0)
                 {
-                    MaTB[i++]=ttsd.getMaTB();
+                    kq.add(ttsd);
                 }
-            }
-        }
-
-        dao=new ThietBiDAO();
-        for(ThietBi tb: dao.getData())
-        {
-            for(int j=0;j<i;j++)
-            {
-                if(tb.getMaTB()==MaTB[j]) kq.add(tb);
             }
         }
         return kq;
     }
-
-    public ArrayList<ThietBi> ThongKeDangMuon()
+    public ArrayList<ThongTinSD> ThongKeDangMuon()
     {
         ThongTinSDDAO ttsdDAO=new ThongTinSDDAO();
-        ArrayList<ThietBi> kq= new ArrayList<>();
-        int [] MaTB= new int[100];
-        int i=0;
+        ArrayList<ThongTinSD> kq= new ArrayList<>();
         for(ThongTinSD ttsd: ttsdDAO.getData())
         {
             if(ttsd.getTgMuon()!=null &&ttsd.getTgTra()==null)
             {
-                MaTB[i++]=ttsd.getMaTB();
+                kq.add(ttsd);
             }
         }
-        dao=new ThietBiDAO();
-        for(ThietBi tb: dao.getData())
-        {
-            for(int j=0;j<i;j++)
-            {
-                if(tb.getMaTB()==MaTB[j]) kq.add(tb);
-            }
-        }
+
         return kq;
     }
 

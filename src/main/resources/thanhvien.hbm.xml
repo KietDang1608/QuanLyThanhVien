@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="DTO.ThanhVien" table="thanhvien">
+        <id name="maTV" type="int">
+            <column name="MaTV" />
+            <generator class="native" />
+        </id>
+        <property name="hoTen" type="string">
+            <column name="HoTen" />
+        </property>
+        <property name="khoa" type="string">
+            <column name="Khoa" />
+        </property>
+        <property name="nganh" type="string">
+            <column name="Nganh" />
+        </property>
+        <property name="sdt" type="string">
+            <column name="SDT" />
+        </property>
+        <property name="password" type="string">
+            <column name="Password" />
+        </property>
+        <property name="email" type="string">
+            <column name="Email" />
+        </property>
+        
+    </class>
+</hibernate-mapping>
