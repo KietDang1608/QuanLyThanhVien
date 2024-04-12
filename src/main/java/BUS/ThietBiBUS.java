@@ -37,10 +37,11 @@ public class ThietBiBUS {
         return listTB;
     }
 
-    public void addThietBi(ThietBi tb)
+    public void addThietBi(ThietBi tb,String loaiTB,int year)
     {
         dao=new ThietBiDAO();
-        dao.addThietBi(tb);
+        loaiTB+=String.valueOf(year);
+        dao.addThietBi(tb,loaiTB);
     }
 
     public Boolean delThietBi(int ID)

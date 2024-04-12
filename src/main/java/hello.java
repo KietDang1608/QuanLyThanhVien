@@ -15,7 +15,7 @@ import DTO.XuLy;
 import GUI.ThanhVienGUI;
 
 public class hello {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         // ThanhVienDAO dao = new ThanhVienDAO();
        
         // ThanhVien tv= new ThanhVien("tuan hung222","CNTT","Toan",773456788);
@@ -26,6 +26,16 @@ public class hello {
         // }
 
         // ThietBiDAO dao= new ThietBiDAO();
+        ThietBiBUS bu= new ThietBiBUS();
+        ThietBi tb=new ThietBi("micro nè", "đây là micro mới");
+        bu.addThietBi(tb, "1", 2020);
+        String excelFilePath = "ThietBi.xls";
+        // bu.delThietBi(1000002);
+        // for(ThietBi tb: bu.ExcelReader(excelFilePath))
+        // {
+        //     bu.addThietBi(tb,);
+        // }
+
 //        ThietBiBUS bu= new ThietBiBUS();
 //        String excelFilePath = "ThietBi.xls";
 //        // ThietBi tb= new ThietBi("máy code chay", "code 2000 dòng");

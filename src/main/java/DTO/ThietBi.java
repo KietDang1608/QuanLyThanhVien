@@ -4,7 +4,6 @@ import javax.persistence.*;
 @Table(name = "thietbi")
 public class ThietBi {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaTB")
     private int maTB;
    
