@@ -1,16 +1,35 @@
 package GUI;
+import BUS.ThanhVienBUS;
+import BUS.ThongKeBUS;
+import BUS.ThongTinSDBUS;
+import DTO.ThongTinSD;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.xml.bind.JAXBContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Vector;
 
 
 public class TKTTSDGUI extends JFrame {
     private JPanel contentPane;
+    private JComboBox<String> khoaCB;
+    private JTable tb = new JTable();
+    private JScrollPane scrollPane = new JScrollPane(tb);
+    private JComboBox<String> nganhCB;
+    private JTextField txtNgayBD;
+    private JTextField txtNgayKT;
+    private TimePanel startTime;
+    private TimePanel endTime;
+
     public TKTTSDGUI() {
         // Setting JFrame properties
         setTitle("Thống kê thành viên vào khu học tập");
@@ -36,16 +55,14 @@ public class TKTTSDGUI extends JFrame {
         startDateLabel.setBounds(10, 70, 100, 20);
         contentPane.add(startDateLabel);
 
-        JTextField txtStartDate = new JTextField();
-        txtStartDate.setBounds(120, 70, 150, 20);
-        contentPane.add(txtStartDate);
-        txtStartDate.setEditable(false);
+        txtNgayBD = new JTextField();
+        txtNgayBD.setBounds(120, 70, 150, 20);
+        contentPane.add(txtNgayBD);
+        txtNgayBD.setEditable(false);
 
         JButton startDateButton = new JButton("...");
         startDateButton.setBounds(270, 70, 20, 20);
         contentPane.add(startDateButton);
-
-
 
         JLabel lb1 = new JLabel("Time: ");
         contentPane.add(lb1);
@@ -54,11 +71,11 @@ public class TKTTSDGUI extends JFrame {
         contentPane.add(lb2);
         lb2.setBounds(300,100,50,20);
 
-        TimePanel startTime=new TimePanel();
+        startTime =new TimePanel();
         contentPane.add(startTime);
         startTime.setBounds(300,65,200,25);
 
-        TimePanel endTime=new TimePanel();
+        endTime=new TimePanel();
         contentPane.add(endTime);
         endTime.setBounds(300,95,200,25);
 
@@ -66,10 +83,10 @@ public class TKTTSDGUI extends JFrame {
         endDateLabel.setBounds(10, 100, 100, 20);
         contentPane.add(endDateLabel);
 
-        JTextField txtEndDate = new JTextField();
-        txtEndDate.setBounds(120, 100, 150, 20);
-        contentPane.add(txtEndDate);
-        txtEndDate.setEditable(false);
+        txtNgayKT = new JTextField();
+        txtNgayKT.setBounds(120, 100, 150, 20);
+        contentPane.add(txtNgayKT);
+        txtNgayKT.setEditable(false);
 
         JButton endDateButton = new JButton("Time");
         endDateButton.setBounds(270, 100, 20, 20);
@@ -79,19 +96,83 @@ public class TKTTSDGUI extends JFrame {
         facultyLabel.setBounds(10, 130, 100, 20);
         contentPane.add(facultyLabel);
 
-        String[] faculties = {"Faculty 1", "Faculty 2", "Faculty 3"}; // Sample data
-        JComboBox<String> facultyComboBox = new JComboBox<>(faculties);
-        facultyComboBox.setBounds(120, 130, 200, 20);
-        contentPane.add(facultyComboBox);
+        khoaCB = new JComboBox<String>();
+        khoaCB.setBounds(120, 130, 200, 20);
+        contentPane.add(khoaCB);
 
         JLabel departmentLabel = new JLabel("Ngành:");
         departmentLabel.setBounds(10, 160, 100, 20);
         contentPane.add(departmentLabel);
 
-        String[] departments = {"Department 1", "Department 2", "Department 3"}; // Sample data
-        JComboBox<String> departmentComboBox = new JComboBox<>(departments);
-        departmentComboBox.setBounds(120, 160, 200, 20);
-        contentPane.add(departmentComboBox);
+        nganhCB = new JComboBox<String>();
+        nganhCB.setBounds(120, 160, 200, 20);
+        contentPane.add(nganhCB);
+
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(10,220,910,300);
+        contentPane.add(scrollPane);
+        ThongTinSDBUS bus = new ThongTinSDBUS();
+        addDataToTable(bus.getListThongTinSD());
+
+        JButton btnALl = new JButton("All");
+        JButton btnLoc = new JButton("Lọc");
+        contentPane.add(btnALl);
+        contentPane.add(btnLoc);
+        btnALl.setBounds(10,190,50,20);
+        btnLoc.setBounds(100,190,100,20);
+        setDefaultFilter();
+        addDataToCB();
+
+        startDateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JCalendar calendar = new JCalendar();
+                JDialog dialog = new JDialog(TKTTSDGUI.this,"Chọn ngày bắt đầu",true);
+                dialog.getContentPane().add(calendar);
+                dialog.setSize(300,200);
+                dialog.setVisible(true);
+
+                dialog.setModal(true);
+
+                dialog.setLocationRelativeTo(contentPane);
+                int y = calendar.getCalendar().get(Calendar.YEAR);
+                int m = calendar.getCalendar().get(Calendar.MONTH) + 1;
+                int d = calendar.getCalendar().get(Calendar.DAY_OF_MONTH);
+                String date = formatDate(y,m,d);
+                txtNgayBD.setText(date);
+            }
+        });
+        endDateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JCalendar calendar = new JCalendar();
+                JDialog dialog = new JDialog(TKTTSDGUI.this,"Chọn ngày kết thúc",true);
+                dialog.getContentPane().add(calendar);
+                dialog.setSize(300,200);
+                dialog.setVisible(true);
+
+                dialog.setModal(true);
+
+                dialog.setLocationRelativeTo(contentPane);
+                int y = calendar.getCalendar().get(Calendar.YEAR);
+                int m = calendar.getCalendar().get(Calendar.MONTH) + 1;
+                int d = calendar.getCalendar().get(Calendar.DAY_OF_MONTH);
+                String date = formatDate(y,m,d);
+                txtNgayKT.setText(date);
+            }
+        });
+        btnLoc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loc();
+            }
+        });
+        btnALl.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addDataToTable(bus.getListThongTinSD());
+            }
+        });
     }
 
 
@@ -159,5 +240,41 @@ public class TKTTSDGUI extends JFrame {
         }
         tb.setModel(nmodel);
     }
-    
+    public void setDefaultFilter(){
+        ThongTinSDBUS  bus = new ThongTinSDBUS();
+
+        txtNgayBD.setText("All");
+        txtNgayKT.setText("All");
+        startTime.setDefault();
+        endTime.setDefault();
+
+        addDataToTable(bus.getListThongTinSD());
+    }
+    public void loc(){
+        ThongTinSDBUS bus = new ThongTinSDBUS();
+        ThongKeBUS tkBus = new ThongKeBUS();
+        ArrayList<ThongTinSD> theoNgayBD = bus.getListThongTinSD();
+        ArrayList<ThongTinSD> theoNgayKT = bus.getListThongTinSD();
+        ArrayList<ThongTinSD> theoKhoa = bus.getListThongTinSD();
+        ArrayList<ThongTinSD> theoNganh = bus.getListThongTinSD();
+
+        if (!txtNgayBD.getText().equals("All")){
+            theoNgayBD = new ArrayList<>();
+            theoNgayBD = tkBus.getDSTVByStart(txtNgayBD.getText(),startTime.getSelectedTime());
+        }
+        if (!txtNgayKT.getText().equals("All")){
+            theoNgayKT = new ArrayList<>();
+            theoNgayKT = tkBus.getDSTVByEnd(txtNgayKT.getText(),endTime.getSelectedTime());
+        }
+        if (khoaCB.getSelectedIndex() != 0){
+            theoKhoa = new ArrayList<>();
+            theoKhoa = tkBus.getDSThanhVienByKhoa(String.valueOf(khoaCB.getSelectedItem()));
+        }
+        if (nganhCB.getSelectedIndex() != 0){
+            theoNganh = new ArrayList<>();
+            theoNganh = tkBus.getDSTVBYNganh(String.valueOf(nganhCB.getSelectedItem()));
+        }
+        for (ThongTinSD tt : theoNganh) System.out.println(tt.toString());
+        addDataToTable(layPhanGiao(theoNgayBD,theoNgayKT,theoKhoa,theoNganh));
+    }
 }
