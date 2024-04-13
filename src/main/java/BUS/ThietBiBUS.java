@@ -65,7 +65,15 @@ public class ThietBiBUS {
         if(dao.updateThietBi(ID, tb))return true;
         return false;
     }
-
+    public String getNameByID(int id){
+        String kq = "";
+        for (ThietBi tb : listTB){
+            if (tb.getMaTB() == id){
+                return tb.getTenTB();
+            }
+        }
+        return kq;
+    }
     public ThietBi getThanhVienByID(int ID)
     {
         dao= new ThietBiDAO();

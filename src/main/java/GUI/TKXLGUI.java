@@ -1,12 +1,15 @@
 package GUI;
 
 import BUS.ThanhVienBUS;
+import BUS.XuLyBUS;
 import DTO.ThongTinSD;
 import DTO.XuLy;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -40,6 +43,7 @@ public class TKXLGUI extends JFrame {
         btnALL = new JRadioButton("All");
         gr.add(btnDangXuLy);
         gr.add(btnDaXuLy);
+        gr.add(btnALL);
 
         btnDangXuLy.setBounds(10,70,100,30);
         btnDaXuLy.setBounds(120,70,100,30);
@@ -62,6 +66,55 @@ public class TKXLGUI extends JFrame {
         scrollPane.setBounds(10,220,910,300);
         contentPane.add(scrollPane);
 
+        XuLyBUS xlbus  = new XuLyBUS();
+        //🥕🥕🥕🥕🥕🥕
+        setDefault();
+
+        btnALL.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setDefault();
+            }
+        });
+
+        btnDaXuLy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loc();
+            }
+        });
+        btnDangXuLy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loc();
+            }
+        });
+    }
+    public void setDefault(){
+        btnALL.setSelected(true);
+        XuLyBUS xlbus  = new XuLyBUS();
+        //🥕🥕🥕🥕🥕🥕
+        addDataToTable(xlbus.getData());
+    }
+    public void loc(){
+        XuLyBUS xuLyBUS = new XuLyBUS();
+        ArrayList<XuLy> lstXuLy =  new ArrayList<>();
+        int tongtien = 0;
+        if (btnDaXuLy.isSelected()){
+            for (XuLy xl : xuLyBUS.getData()){
+                if (xl.getTrangThaiXL() == 1) {
+                    lstXuLy.add(xl);
+                    tongtien+=xl.getSoTien();
+                }
+            }
+        }else {
+            for (XuLy xl : xuLyBUS.getData()) {
+                if (xl.getTrangThaiXL() == 0)
+                    lstXuLy.add(xl);
+            }
+        }
+        txtTien.setText(String.valueOf(tongtien));
+        addDataToTable(lstXuLy);
     }
     public void addDataToTable(ArrayList<XuLy> lstXuLy){
         DefaultTableModel nmodel = new DefaultTableModel();
