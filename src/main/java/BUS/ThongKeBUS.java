@@ -33,6 +33,42 @@ public class ThongKeBUS {
         }
         return lstFound;
     }
+    public ArrayList<ThongTinSD> getDSTVByStart(String startDate, String startTime){
+        ThongTinSDBUS ttsdBUS = new ThongTinSDBUS();
+        //Date : yyyy-mm-dd
+        //Time : hh-mm-ss
+        ArrayList<ThongTinSD> lstFound = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String s_datetime = (startDate + " " + startTime);
+
+        LocalDateTime datetimeStart = LocalDateTime.parse(s_datetime,formatter);
+        for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
+            LocalDateTime dt = LocalDateTime.parse(tt.getTgVao(),formatter);
+            if (dt.isEqual(datetimeStart) || dt.isAfter(datetimeStart)){
+                lstFound.add(tt);
+            }
+        }
+        return lstFound;
+    }
+    public ArrayList<ThongTinSD> getDSTVByEnd(String endDate, String endTime){
+        ThongTinSDBUS ttsdBUS = new ThongTinSDBUS();
+        //Date : yyyy-mm-dd
+        //Time : hh-mm-ss
+        ArrayList<ThongTinSD> lstFound = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String s_datetime = (endDate + " " + endTime);
+
+        LocalDateTime datetimeEnd = LocalDateTime.parse(s_datetime,formatter);
+        for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
+            LocalDateTime dt = LocalDateTime.parse(tt.getTgVao(),formatter);
+            if (dt.isEqual(datetimeEnd) || dt.isBefore(datetimeEnd)){
+                lstFound.add(tt);
+            }
+        }
+        return lstFound;
+    }
     //Thong ke danh sach thanh vien vao khu vuc hoc tap theo khoa
     public ArrayList<ThongTinSD> getDSThanhVienByKhoa(String khoa){
         ThongTinSDBUS ttsdBUS = new ThongTinSDBUS();

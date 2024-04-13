@@ -23,14 +23,14 @@ public class addThanhVien extends javax.swing.JFrame {
         psw.setText("");
     }
 
-    public boolean checkForBlank() {
-        return txName.getText().isBlank()
-                || txKhoa.getText().isBlank()
-                || txNganh.getText().isBlank()
-                || txSdt.getText().isBlank()
-                || txEmail.getText().isBlank()
-                || psw.getText().isBlank();
-    }
+//    public boolean checkForBlank() {
+//        return txName.getText().isBlank()
+//                || txKhoa.getText().isBlank()
+//                || txNganh.getText().isBlank()
+//                || txSdt.getText().isBlank()
+//                || txEmail.getText().isBlank()
+//                || psw.getText().isBlank();
+//    }
     
     public boolean checkOverlapId(int id) {
         for (ThanhVien tv : tvBus.getData()) {
@@ -372,10 +372,10 @@ public class addThanhVien extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
-        if (checkForBlank()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng không để trống mục thông tin nào.");
-            return;
-        }
+//        if (checkForBlank()) {
+//            JOptionPane.showMessageDialog(this, "Vui lòng không để trống mục thông tin nào.");
+//            return;
+//        }
         
         String hoTen = txName.getText();
         String khoa = txKhoa.getText();

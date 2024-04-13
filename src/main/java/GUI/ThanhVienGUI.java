@@ -183,12 +183,12 @@ public class ThanhVienGUI extends javax.swing.JFrame {
     }
 
     public boolean checkForBlank() {
-        return txName.getText().isBlank()
-                || txKhoa.getText().isBlank()
-                || txNganh.getText().isBlank()
-                || txSDT.getText().isBlank()
-                || txEmail.getText().isBlank()
-                || txPsw.getText().isBlank();
+        return txName.getText().length()==0
+                || txKhoa.getText().length()==0
+                || txNganh.getText().length()==0
+                || txSDT.getText().length()==0
+                || txEmail.getText().length()==0
+                || txPsw.getText().length()==0;
     }
 
     //This function is only used to add more element to a given model, it does not check for repeatition inside
