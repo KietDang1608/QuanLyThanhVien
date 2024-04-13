@@ -1,14 +1,21 @@
 package GUI;
 
+import BUS.ThanhVienBUS;
+import BUS.ThietBiBUS;
+import BUS.ThongTinSDBUS;
 import DTO.ThietBi;
+import DTO.ThongTinSD;
 import com.toedter.calendar.JCalendar;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Vector;
 
 public class TKTBGUI extends JFrame {
     private JPanel contentPane;
@@ -134,6 +141,19 @@ public class TKTBGUI extends JFrame {
                 txtEndDate.setText(date);
             }
         });
+        setDefault();
+        btnALl.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setDefault();
+            }
+        });
+        btnLoc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loc();
+            }
+        });
     }
     private String formatDate(int y, int m, int d){
         String date = "";
@@ -148,7 +168,65 @@ public class TKTBGUI extends JFrame {
         else date += String.valueOf(d);
         return date;
     }
-    public void addDataToTable(ArrayList<ThietBi> lstThietBi){
+    public void addDataToTable(ArrayList<ThongTinSD> lstSuDung){
 
+        DefaultTableModel nmodel = new DefaultTableModel();
+        nmodel.addColumn("STT");
+        nmodel.addColumn("Mã TB");
+        nmodel.addColumn("Tên TB");
+        nmodel.addColumn("TG Mượn");
+
+//        nmodel.addColumn("tgm",new Object[] {"TG mượn"});
+//        nmodel.addColumn("tgt",new Object[] {"TG trả"});
+        ThietBiBUS tbBUS = new ThietBiBUS();
+        int i = 1;
+        for (ThongTinSD tt : lstSuDung){
+            Vector vt = new Vector<>();
+            vt.add(i++);
+            vt.add(tt.getMaTB());
+            vt.add(tbBUS.getNameByID(tt.getMaTB()));
+            vt.add(tt.getTgMuon());
+            nmodel.addRow(vt);
+        }
+        table.setModel(nmodel);
+
+    }
+    public void setDefault(){
+        txtTenTB.setText("");
+        txtStartDate.setText("All");
+        txtEndDate.setText("All");
+        pnStartTime.setDefault();
+        pnEndTime.setDefault();
+        ThietBiBUS thietBiBUS = new ThietBiBUS();
+        addDataToTable(thietBiBUS.ThongKeDangMuon());
+    }
+    public void loc(){
+        ThietBiBUS thietBiBUS = new ThietBiBUS();
+        ArrayList<ThongTinSD> theoNgayBD = thietBiBUS.ThongKeDangMuon();
+        ArrayList<ThongTinSD> theoNgayKT = thietBiBUS.ThongKeDangMuon();
+        ArrayList<ThongTinSD> theoTen = thietBiBUS.ThongKeDangMuon();
+        if (!txtStartDate.getText().equals("All")){
+            theoNgayBD = thietBiBUS.ThongKeByStartDate(txtStartDate.getText() + " " + pnStartTime.getSelectedTime());
+        }
+        if (!txtEndDate.getText().equals("All")){
+            theoNgayKT = thietBiBUS.ThongKeByEndDate(txtEndDate.getText() + " " + pnEndTime.getSelectedTime());
+        }
+        if (txtTenTB.getText().length()!=0){
+            theoTen = thietBiBUS.ThongKeByName(txtTenTB.getText());
+        }
+        addDataToTable(layPhanGiao(theoNgayBD,theoNgayKT,theoTen));
+    }
+    public ArrayList<ThongTinSD> layPhanGiao(ArrayList<ThongTinSD>... lists) {
+        // Khởi tạo một HashSet để chứa các phần tử chung
+        HashSet<ThongTinSD> commonElementsSet = new HashSet<>(lists[0]);
+        // Duyệt qua từng ArrayList trong danh sách đầu vào
+        for (int i = 1; i < lists.length; i++) {
+            // Tạo một HashSet tạm thời chứa phần tử của ArrayList hiện tại
+            HashSet<ThongTinSD> currentListSet = new HashSet<>(lists[i]);
+            // Giữ lại các phần tử chung với commonElementsSet
+            commonElementsSet.retainAll(currentListSet);
+        }
+        // Chuyển đổi HashSet thành ArrayList và trả về
+        return new ArrayList<>(commonElementsSet);
     }
 }
