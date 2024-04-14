@@ -26,9 +26,13 @@ public class hello {
 
         // ThietBiDAO dao= new ThietBiDAO();
         ThietBiBUS bu= new ThietBiBUS();
-        ThietBi tb=new ThietBi("micro nè", "đây là micro mới");
-        bu.addThietBi(tb, "1", 2020);
-        String excelFilePath = "ThietBi.xls";
+        // ThietBi tb=new ThietBi("micro nè", "đây là micro mới");
+        // bu.addThietBi(tb, "1", 2020);
+        // String excelFilePath = "ThietBi.xls";
+        for (ThongTinSD ttsd: bu.ThongKeByName("Micro"))
+        {
+            System.out.println(ttsd.toString());
+        }
         // bu.delThietBi(1000002);
         // for(ThietBi tb: bu.ExcelReader(excelFilePath))
         // {

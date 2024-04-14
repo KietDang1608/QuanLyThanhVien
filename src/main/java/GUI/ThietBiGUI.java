@@ -173,7 +173,7 @@ public class ThietBiGUI extends JFrame {
 				if(text_tenTB.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Vui lòng nhập Tên Thiết Bị!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 				}else {
-					bus.addThietBi(tb);
+					// bus.addThietBi(tb);
 					reloadTable();
 				}
 			}
@@ -348,7 +348,7 @@ public class ThietBiGUI extends JFrame {
 				String tenTB = lst.getTenTB();
 				String motaTB = lst.getMoTa();
 				ThietBi tb = new ThietBi(tenTB,motaTB);
-				bus.addThietBi(tb);
+				// bus.addThietBi(tb);
 	    	}
 	    	reloadTable();
 	    }
