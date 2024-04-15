@@ -93,20 +93,10 @@ public class ThietBiDAO {
         }
     }
 
-    public boolean delThietBiByField(String fieldName, String value) 
+    public boolean delThietBiByField(String value)
     {
         try {
-            int intValue;
-            try {
-                // Thử chuyển đổi giá trị từ String sang int
-                intValue = Integer.parseInt(value);
-            } catch (NumberFormatException ex) {
-                // Nếu không thể chuyển đổi, giữ nguyên kiểu dữ liệu là String
-                intValue = -1; // hoặc một giá trị khác biểu thị rằng không có giá trị số hợp lệ
-            }
-            
-            Query query = session.createQuery("delete from ThietBi where " + fieldName + " = :value");
-            query.setParameter("value", intValue != -1 ? intValue : value); // Sử dụng giá trị chuỗi nếu không thể chuyển đổi thành số nguyên
+            Query query = session.createQuery("delete from ThietBi where maTB LIKE '" + value + "%'");
             int result = query.executeUpdate();
             session.getTransaction().commit();
             session.close();
