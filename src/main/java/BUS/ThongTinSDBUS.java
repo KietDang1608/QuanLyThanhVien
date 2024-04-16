@@ -15,6 +15,7 @@ public class ThongTinSDBUS {
         return listThongTinSD;
     }
     public void addData(ThongTinSD tt){
+        dao= new ThongTinSDDAO();
         dao.addTTSD(tt);
     }
     public void updateData(ThongTinSD tt){

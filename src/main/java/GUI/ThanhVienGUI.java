@@ -9,7 +9,7 @@ import DTO.XuLy;
 import java.awt.Color;
 import java.awt.Component;
 
-import java.awt.EventQueue;
+import java.awt.EventQueue; 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;

@@ -71,6 +71,13 @@ public class ThietBiDAO {
         }
     }
 
+    public void addThietBiEx(ThietBi tb)
+    {
+        session.save(tb);
+        session.getTransaction().commit();
+        session.close();
+    }
+
     public Boolean delThietBi(int ID)
     {
         ThietBi tb = session.get(ThietBi.class, ID);

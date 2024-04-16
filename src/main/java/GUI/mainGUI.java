@@ -10,13 +10,13 @@ import javax.swing.*;
 
 public class mainGUI extends JFrame {
 
-    private JPanel contentPane;
+    private JPanel contentPane, panel;
     private ThanhVienGUI tvGui = new ThanhVienGUI();
     private ThietBiGUI tbGui = new ThietBiGUI();
     private ThongTinGUI ttGui = new ThongTinGUI();
     private XuLyGUI xlGui = new XuLyGUI();
     private ThongKeGUI tkGui = new ThongKeGUI();
-    JFrame[] frames = {tvGui, tbGui, ttGui, xlGui, tkGui};
+    JFrame[] frames = {tbGui, ttGui, xlGui, tkGui};
 
     /**
      * Launch the application.
@@ -44,11 +44,18 @@ public class mainGUI extends JFrame {
         contentPane.setBackground(new Color(226, 244, 197));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        for (JFrame frame : frames) {
-            contentPane.add(frame.getContentPane());
-            frame.getContentPane().setBounds(192, 46, 1092, 665);
-        }
-        tatMenu();
+        panel = new JPanel();
+		panel.setBounds(192, 46, 1092, 665);
+		contentPane.add(panel);
+
+		panel.add(tvGui.getContentPane());
+		panel.setVisible(false);
+		tvGui.getContentPane().setBounds(192, 46, 1092, 665);
+		for (JFrame frame:frames){
+			contentPane.add(frame.getContentPane());
+			frame.getContentPane().setBounds(192, 46, 1092, 665);
+		}
+		tatMenu();
 
         setContentPane(contentPane);
         contentPane.setLayout(null);
@@ -76,7 +83,7 @@ public class mainGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub)
                 tatMenu();
-                tvGui.getContentPane().setVisible(true);
+                panel.setVisible(true);
 
             }
 
@@ -182,5 +189,6 @@ public class mainGUI extends JFrame {
         for (JFrame frame : frames) {
             frame.getContentPane().setVisible(false);
         }
+        panel.setVisible(false);
     }
 }

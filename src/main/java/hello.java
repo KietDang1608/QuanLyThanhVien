@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import BUS.ThanhVienBUS;
 import BUS.ThietBiBUS;
+import BUS.ThongTinSDBUS;
 import DAO.ThanhVienDAO;
 import DAO.ThietBiDAO;
 import DAO.ThongTinSDDAO;
@@ -26,14 +27,14 @@ public class hello {
         // }
 
         // ThietBiDAO dao= new ThietBiDAO();
-        ThietBiBUS bu= new ThietBiBUS();
+        // ThietBiBUS bu= new ThietBiBUS();
         // ThietBi tb=new ThietBi("micro nè", "đây là micro mới");
         // bu.addThietBi(tb, "1", 2020);
         // String excelFilePath = "ThietBi.xls";
-        for (ThongTinSD ttsd: bu.ThongKeByName("Micro"))
-        {
-            System.out.println(ttsd.toString());
-        }
+        // for (ThongTinSD ttsd: bu.ThongKeByName("Micro"))
+        // {
+        //     System.out.println(ttsd.toString());
+        // }
         // bu.delThietBi(1000002);
         // for(ThietBi tb: bu.ExcelReader(excelFilePath))
         // {
@@ -61,7 +62,9 @@ public class hello {
     //     System.out.println(tb2.toString());
     //    }
         // ThongTinSDDAO dao= new ThongTinSDDAO();
-        // ThongTinSD tt= new ThongTinSD(1147483651, 1000001, null, null, null);
+        ThongTinSDBUS bu= new ThongTinSDBUS();
+        ThongTinSD tt= new ThongTinSD(1147483651, null, "2024-03-20", null, null, null);
+        bu.addData(tt);
         // dao.delTTSDByField("MaTV",Integer.toString(1147483651));
         // for (ThongTinSD tt2: new ThongTinSDDAO().getData()){
         //     System.out.println(tt2.toString());
