@@ -43,6 +43,10 @@ public class TimePanel extends JPanel {
         String second = (String) secondComboBox.getSelectedItem();
         return hour + ":" + minute + ":" + second;
     }
-
+    public void setDefault(){
+        hourComboBox.setSelectedIndex(0);
+        minuteComboBox.setSelectedIndex(0);
+        secondComboBox.setSelectedIndex(0);
+    }
 
 }

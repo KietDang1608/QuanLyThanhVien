@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,17 +17,14 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import DAO.ThanhVienDAO;
 import DTO.ThanhVien;
 
 public class ThanhVienBUS {
-    static ArrayList<ThanhVien> listTV;
+    public static ArrayList<ThanhVien> listTV;
     ThanhVienDAO dao;
-
+    
     public ArrayList<ThanhVien> getData()
     {
         dao= new ThanhVienDAO();
@@ -47,7 +45,54 @@ public class ThanhVienBUS {
         return false;
         
     }
+    public ArrayList<String> getDSKhoa(){
+        HashSet<String> uniqueKhoasSet = new HashSet<>();
 
+        // Iterate over the ThanhVien objects and add their khoa values to the uniqueKhoas list
+        for (ThanhVien thanhVien : listTV) {
+            uniqueKhoasSet.add(thanhVien.getKhoa());
+        }
+
+        // Convert the HashSet to an ArrayList
+        return new ArrayList<>(uniqueKhoasSet);
+    }
+    public ArrayList<String> getDSNganh(){
+        HashSet<String> uniqueKhoasSet = new HashSet<>();
+
+        // Iterate over the ThanhVien objects and add their khoa values to the uniqueKhoas list
+        for (ThanhVien thanhVien : listTV) {
+            uniqueKhoasSet.add(thanhVien.getNganh());
+        }
+
+        // Convert the HashSet to an ArrayList
+        return new ArrayList<>(uniqueKhoasSet);
+    }
+    public String getTenByID(int id){
+        String ten = "";
+        for (ThanhVien tv : listTV){
+            if(tv.getMaTV() == id)
+                return tv.getHoTen();
+        }
+        return ten;
+    }
+    public String getKhoaByID(int id){
+        String khoa = "";
+        for (ThanhVien tv : listTV){
+            if(tv.getMaTV() == id)
+                return tv.getKhoa();
+        }
+        return khoa;
+
+    }
+    public String getNganhByID(int id){
+        String nganh = "";
+        for (ThanhVien tv : listTV){
+            if(tv.getMaTV() == id)
+                return tv.getNganh();
+        }
+        return nganh;
+
+    }
     public Boolean delThanhVienByField(String fieldName, String value)
     {
         dao= new ThanhVienDAO();
@@ -55,11 +100,10 @@ public class ThanhVienBUS {
         return false;
     }
 
-    public Boolean updateThanhVien(int ID,ThanhVien tv)
+    public Boolean updateThanhVien(int ID, String hoTen, String khoa, String nganh, String sdt, String password, String email)
     {
         dao= new ThanhVienDAO();
-        if(dao.updateThanhVien(ID, tv))return true;
-        return false;
+        return dao.updateThanhVien(ID, hoTen, khoa, nganh, sdt, password, email);
     }
 
     public ThanhVien getThanhVienByID(int ID)

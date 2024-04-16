@@ -12,6 +12,7 @@ import DTO.ThietBi;
 import DTO.ThongTinSD;
 import DTO.ThongTinSD;
 import DTO.XuLy;
+import GUI.ThanhVienGUI;
 
 public class hello {
     public static void main(String[] args) throws FileNotFoundException, IOException {
@@ -38,6 +39,16 @@ public class hello {
         // {
         //     bu.addThietBi(tb,);
         // }
+
+//        ThietBiBUS bu= new ThietBiBUS();
+//        String excelFilePath = "ThietBi.xls";
+//        // ThietBi tb= new ThietBi("máy code chay", "code 2000 dòng");
+//        bu.delThietBi(1000002);
+//        for(ThietBi tb: bu.getData())
+//        {
+//            System.out.println(tb.toString());
+//        }
+            ThanhVienGUI gui = new ThanhVienGUI();
       
 
         
