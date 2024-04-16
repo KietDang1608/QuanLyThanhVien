@@ -29,7 +29,14 @@ public class XuLyBUS {
         return false;
         
     }
-
+    public boolean checkTVViPham(int idTV){
+        for (XuLy xl : getData()){
+            if (xl.getMaTV() == idTV)
+                if (xl.getTrangThaiXL() == 0)
+                    return true;
+        }
+        return false;
+    }
     public Boolean delXuLyByField(String fieldName,String value)
     {
         dao =new XuLyDAO();

@@ -31,7 +31,13 @@ public class ThanhVienBUS {
         listTV=dao.getData();
         return listTV;
     }
-
+    public boolean checkThanhVien(int id){
+        for (ThanhVien tv : getData()){
+            if (tv.getMaTV() == id)
+                return true;
+        }
+        return false;
+    }
     public void addThanhVien(ThanhVien tv)
     {
         dao=new ThanhVienDAO();

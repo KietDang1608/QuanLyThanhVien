@@ -43,7 +43,13 @@ public class ThietBiBUS {
         loaiTB+=String.valueOf(year);
         dao.addThietBi(tb,loaiTB);
     }
-
+    public boolean checkThietBi(int id){
+        for (ThietBi tb: getData()){
+            if (id == tb.getMaTB())
+                return true;
+        }
+        return false;
+    }
     public Boolean delThietBi(int ID)
     {
         dao= new ThietBiDAO();

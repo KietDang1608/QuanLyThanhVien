@@ -27,6 +27,7 @@ public class ThongKeBUS {
         LocalDateTime datetimeEnd =LocalDateTime.parse(s_datetime2,formatter);
         for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
             LocalDateTime dt = LocalDateTime.parse(tt.getTgVao(),formatter);
+
             if ((dt.isEqual(datetimeStart) || dt.isAfter(datetimeStart)) && (dt.isEqual(datetimeEnd) || dt.isBefore(datetimeEnd))){
                 lstFound.add(tt);
             }
@@ -45,8 +46,10 @@ public class ThongKeBUS {
         LocalDateTime datetimeStart = LocalDateTime.parse(s_datetime,formatter);
         for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
             LocalDateTime dt = LocalDateTime.parse(tt.getTgVao(),formatter);
-            if (dt.isEqual(datetimeStart) || dt.isAfter(datetimeStart)){
-                lstFound.add(tt);
+            if (tt.getTgVao() != null) {
+                if (dt.isEqual(datetimeStart) || dt.isAfter(datetimeStart)) {
+                    lstFound.add(tt);
+                }
             }
         }
         return lstFound;
@@ -63,8 +66,10 @@ public class ThongKeBUS {
         LocalDateTime datetimeEnd = LocalDateTime.parse(s_datetime,formatter);
         for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
             LocalDateTime dt = LocalDateTime.parse(tt.getTgVao(),formatter);
-            if (dt.isEqual(datetimeEnd) || dt.isBefore(datetimeEnd)){
-                lstFound.add(tt);
+            if (tt.getTgVao() != null) {
+                if (dt.isEqual(datetimeEnd) || dt.isBefore(datetimeEnd)) {
+                    lstFound.add(tt);
+                }
             }
         }
         return lstFound;
@@ -76,11 +81,23 @@ public class ThongKeBUS {
         ArrayList<ThongTinSD> lstFound = new ArrayList<>();
         for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
             ThanhVien tv = tvBUS.getThanhVienByID(tt.getMaTV());
-            if (tv.getKhoa().contains(khoa)){
-                lstFound.add(tt);
+            if (tt.getTgVao() != null) {
+                if (tv.getKhoa().contains(khoa)) {
+                    lstFound.add(tt);
+                }
             }
         }
         return lstFound;
+    }
+    public ArrayList<ThongTinSD> getDSVAO(){
+        ThongTinSDBUS ttsdBUS = new ThongTinSDBUS();
+        ArrayList<ThongTinSD> lstFound = new ArrayList<>();
+        for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
+            if (tt.getTgVao() != null){
+                lstFound.add(tt);
+            }
+        }
+        return  lstFound;
     }
     // Thong ke danh sach thanh vien vao khu vuc theo nganh
     public ArrayList<ThongTinSD> getDSTVBYNganh(String nganh){
@@ -89,8 +106,10 @@ public class ThongKeBUS {
         ArrayList<ThongTinSD> lstFound = new ArrayList<>();
         for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
             ThanhVien tv = tvBUS.getThanhVienByID(tt.getMaTV());
-            if (tv.getNganh().contains(nganh)){
-                lstFound.add(tt);
+            if (tt.getTgVao() != null) {
+                if (tv.getNganh().contains(nganh)) {
+                    lstFound.add(tt);
+                }
             }
         }
         return lstFound;
