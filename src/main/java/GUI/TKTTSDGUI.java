@@ -29,7 +29,7 @@ public class TKTTSDGUI extends JFrame {
     private JTextField txtNgayKT;
     private TimePanel startTime;
     private TimePanel endTime;
-
+    private ThongKeBUS tkbus = new ThongKeBUS();
     public TKTTSDGUI() {
         // Setting JFrame properties
         setTitle("Thống kê thành viên vào khu học tập");
@@ -111,8 +111,8 @@ public class TKTTSDGUI extends JFrame {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(10,220,910,300);
         contentPane.add(scrollPane);
-        ThongTinSDBUS bus = new ThongTinSDBUS();
-        addDataToTable(bus.getListThongTinSD());
+
+        addDataToTable(tkbus.getDSVAO());
 
         JButton btnALl = new JButton("All");
         JButton btnLoc = new JButton("Lọc");
@@ -170,7 +170,7 @@ public class TKTTSDGUI extends JFrame {
         btnALl.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addDataToTable(bus.getListThongTinSD());
+                addDataToTable(tkbus.getDSVAO());
             }
         });
     }
@@ -241,22 +241,20 @@ public class TKTTSDGUI extends JFrame {
         tb.setModel(nmodel);
     }
     public void setDefaultFilter(){
-        ThongTinSDBUS  bus = new ThongTinSDBUS();
 
         txtNgayBD.setText("All");
         txtNgayKT.setText("All");
         startTime.setDefault();
         endTime.setDefault();
 
-        addDataToTable(bus.getListThongTinSD());
+        addDataToTable(tkbus.getDSVAO());
     }
     public void loc(){
-        ThongTinSDBUS bus = new ThongTinSDBUS();
         ThongKeBUS tkBus = new ThongKeBUS();
-        ArrayList<ThongTinSD> theoNgayBD = bus.getListThongTinSD();
-        ArrayList<ThongTinSD> theoNgayKT = bus.getListThongTinSD();
-        ArrayList<ThongTinSD> theoKhoa = bus.getListThongTinSD();
-        ArrayList<ThongTinSD> theoNganh = bus.getListThongTinSD();
+        ArrayList<ThongTinSD> theoNgayBD = tkBus.getDSVAO();
+        ArrayList<ThongTinSD> theoNgayKT =  tkBus.getDSVAO();
+        ArrayList<ThongTinSD> theoKhoa =  tkBus.getDSVAO();
+        ArrayList<ThongTinSD> theoNganh =  tkBus.getDSVAO();
 
         if (!txtNgayBD.getText().equals("All")){
             theoNgayBD = new ArrayList<>();

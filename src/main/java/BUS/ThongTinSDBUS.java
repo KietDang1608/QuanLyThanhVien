@@ -4,9 +4,10 @@ import DAO.ThongTinSDDAO;
 import DTO.ThongTinSD;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ThongTinSDBUS {
-    private ArrayList<ThongTinSD> listThongTinSD = new ArrayList<>();
+    private ArrayList<ThongTinSD> listThongTinSD;
     private ThongTinSDDAO dao = new ThongTinSDDAO();
     public ThongTinSDBUS(){
         listThongTinSD = dao.getData();
@@ -14,10 +15,24 @@ public class ThongTinSDBUS {
     public ArrayList<ThongTinSD> getListThongTinSD(){
         return listThongTinSD;
     }
+    public ArrayList<ThongTinSD> getData(){
+
+        return dao.getData();
+    }
     public void addData(ThongTinSD tt){
+        dao= new ThongTinSDDAO();
         dao.addTTSD(tt);
     }
+    public ThongTinSD getTTChuaMuonByMaTB(int matb){
+        for (ThongTinSD tt : getListThongTinSD()){
+            if (tt.getMaTB() == matb && tt.getTgTra() == null){
+                return tt;
+            }
+        }
+        return null;
+    }
     public void updateData(ThongTinSD tt){
+        dao = new ThongTinSDDAO();
         dao.updateTTSD(tt.getMaTT(),tt);
     }
     public void deleleData(ThongTinSD tt){
@@ -50,5 +65,14 @@ public class ThongTinSDBUS {
         }
         return lstTT;
     }
-
+    public boolean checkDangMuon(int id){
+        for (ThongTinSD tt : getListThongTinSD()){
+            if (tt.getMaTB() == id){
+                System.out.println(tt.getTgTra());
+                if (tt.getTgTra() == null)
+                    return false;
+            }
+        }
+        return true;
+    }
 }

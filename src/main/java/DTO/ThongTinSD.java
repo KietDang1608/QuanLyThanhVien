@@ -51,7 +51,7 @@ public class ThongTinSD {
     }
 
     public int getMaTB() {
-        return maTB;
+        return maTB != null ? maTB : -1;
     }
 
     public void setMaTB(Integer maTB) {
