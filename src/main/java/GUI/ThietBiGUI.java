@@ -272,7 +272,14 @@ public class ThietBiGUI extends JFrame {
 		nmodel.addColumn("MoTaTB",new Object[] {"Mô Tả Thiết Bị"});
 		for(ThietBi tb : lst)
 		{
-			if (Integer.toString(tb.getMaTB()).charAt(0) != temp){
+			boolean flag = true;
+			for (String item : count){
+				if (Character.toString(Integer.toString(tb.getMaTB()).charAt(0)).equals(item)){
+					flag = false;
+					break;
+				}
+			}
+			if (flag){
 				temp = Integer.toString(tb.getMaTB()).charAt(0);
 				count.add(Character.toString(Integer.toString(tb.getMaTB()).charAt(0)));
 			}
