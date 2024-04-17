@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -83,50 +84,50 @@ public class ThietBiGUI extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JPanel panelTop = new JPanel();
 		panelTop.setBounds(0, 0, 1092, 72);
 		panelTop.setBackground(new Color(168, 205, 159));
 		contentPane.add(panelTop);
 		panelTop.setLayout(null);
-		
+
 		JLabel LabelHead = new JLabel("THIẾT BỊ");
 		LabelHead.setForeground(new Color(255, 255, 255));
 		LabelHead.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		LabelHead.setBounds(462, 11, 219, 53);
 		panelTop.add(LabelHead);
-		
+
 		table_qltb = new JTable();
 		table_qltb.setBounds(10, 82, 1068, 360);
 		contentPane.add(table_qltb);
-		
+
 		text_tenTB = new JTextField();
 		text_tenTB.setBounds(111, 553, 96, 19);
 		contentPane.add(text_tenTB);
 		text_tenTB.setColumns(10);
-		
+
 		text_maTB = new JTextField();
 		text_maTB.setBounds(111, 472, 96, 19);
 		text_maTB.setEditable(false);
 		contentPane.add(text_maTB);
 		text_maTB.setColumns(10);
-		
+
 		JLabel lblMThitB = new JLabel("Mã Thiết Bị :");
 		lblMThitB.setBounds(21, 475, 80, 13);
 		contentPane.add(lblMThitB);
-		
+
 		JLabel label_tenTB = new JLabel("Tên Thiết Bị :");
 		label_tenTB.setBounds(21, 553, 80, 13);
 		contentPane.add(label_tenTB);
-		
+
 		JLabel lblMTThit = new JLabel("Mô Tả Thiết Bị :");
 		lblMTThit.setBounds(228, 475, 96, 13);
 		contentPane.add(lblMTThit);
-		
+
 		JTextArea textArea_motaTB = new JTextArea();
 		textArea_motaTB.setBounds(327, 469, 282, 112);
 		contentPane.add(textArea_motaTB);
-		
+
 		JButton btn_themTB = new JButton("Thêm Thiết Bị");
 
 		btn_themTB.setBounds(916, 466, 152, 31);
@@ -134,28 +135,28 @@ public class ThietBiGUI extends JFrame {
 //		btn_themTB.setForeground(Color.white);
 		btn_themTB.setIcon(new ImageIcon(add));
 		contentPane.add(btn_themTB);
-		
+
 		JButton btn_suaTB = new JButton("Sửa Thiết Bị");
 		btn_suaTB.setBounds(916, 518, 152, 31);
 		btn_suaTB.setBackground(new Color(250,224,199));
 //		btn_suaTB.setForeground(Color.white);
 		btn_suaTB.setIcon(new ImageIcon(update));
 		contentPane.add(btn_suaTB);
-		
+
 		JButton btn_xoaTB = new JButton("Xóa Thiết Bị");
 		btn_xoaTB.setBounds(916, 570, 152, 31);
 		btn_xoaTB.setBackground(new Color(242,128,118));
 //		btn_xoaTB.setForeground(Color.white);
 		btn_xoaTB.setIcon(new ImageIcon(delete));
 		contentPane.add(btn_xoaTB);
-		
+
 		JButton btn_xoaTBByDK = new JButton("Xóa Nhiều Thiết Bị");
 		btn_xoaTBByDK.setBounds(751, 466, 142, 31);
 		btn_xoaTBByDK.setBackground(new Color(242,128,118));
 		btn_xoaTBByDK.setForeground(Color.white);
 		btn_xoaTBByDK.setIcon(new ImageIcon(deletes));
 		contentPane.add(btn_xoaTBByDK);
-		
+
 		JButton btn_themTBEX = new JButton("Excel");
 
 		btn_themTBEX.setBounds(629, 466, 101, 31);
@@ -163,7 +164,7 @@ public class ThietBiGUI extends JFrame {
 		btn_themTBEX.setBackground(new Color(68,238,187));
 		btn_themTBEX.setForeground(Color.white);
 		contentPane.add(btn_themTBEX);
-		
+
 		btn_themTB.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -226,7 +227,7 @@ public class ThietBiGUI extends JFrame {
 		        textArea_motaTB.setText(String.valueOf(table_qltb.getValueAt(i, 2)));
 		    }
 		});
-		
+
 		// Tạo JScrollPane
 		JScrollPane scrollPane = new JScrollPane(table_qltb);
 		scrollPane.setBounds(10, 82, 1068, 360);
@@ -250,21 +251,28 @@ public class ThietBiGUI extends JFrame {
 		    }
 		});
         reloadTable();
-        
-		
+
+
 	}
 	public void reloadTable()
 	{
 		addDBToTable(bus.getData());
 	}
+	List<String> count = new ArrayList<>();
 	public void addDBToTable(ArrayList <ThietBi> lst)
 	{
+		count.clear();
+		char temp=0;
 		DefaultTableModel nmodel = new DefaultTableModel();
 		nmodel.addColumn("MaTB",new Object[] {"Mã Thiết Bị"});
 		nmodel.addColumn("TenTB",new Object[] {"Tên Thiết Bị"});
-		nmodel.addColumn("MoTaTB",new Object[] {"Mô Tả Thiết Bị"});	
+		nmodel.addColumn("MoTaTB",new Object[] {"Mô Tả Thiết Bị"});
 		for(ThietBi tb : lst)
 		{
+			if (Integer.toString(tb.getMaTB()).charAt(0) != temp){
+				temp = Integer.toString(tb.getMaTB()).charAt(0);
+				count.add(Character.toString(Integer.toString(tb.getMaTB()).charAt(0)));
+			}
 			Vector vt = new Vector();
 			vt.add(tb.getMaTB());
 			vt.add(tb.getTenTB());
@@ -272,16 +280,19 @@ public class ThietBiGUI extends JFrame {
 			nmodel.addRow(vt);
 		}
 		table_qltb.setModel(nmodel);
+
 	}
 	 private void showDelDeviceForm() {
-			String[] option ={"TenTB","MoTaTB"};
-			JComboBox cb = new JComboBox(option);
+		 JComboBox cb = new JComboBox();
+		 cb.addItem("Loại thiết bị!");
+			for (String item : count){
+				cb.addItem(item);
+			}
+
 	        // Tạo cửa sổ mới để chứa form thêm thiết bị
-	        JFrame addDeviceFrame = new JFrame("Thêm Thiết Bị");
+	        JFrame addDeviceFrame = new JFrame("Xóa Thiết Bị");
 
 	        // Khởi tạo các thành phần của form
-
-	        JLabel lbl_dk = new JLabel("Điều Kiện :");
 	        JTextArea txt_modkTB = new JTextArea(5, 20);
 	        JButton btn_xoa = new JButton("Xóa");
 	        btn_xoa.setBackground(new Color(242,128,118));
@@ -295,7 +306,6 @@ public class ThietBiGUI extends JFrame {
 	        JPanel panel = new JPanel();
 	        panel.setLayout(new GridLayout(3, 2));
 	        panel.add(cb);
-	        panel.add(lbl_dk);
 	        panel.add(txt_modkTB);
 
 	        JPanel buttonPanel = new JPanel();
@@ -307,17 +317,14 @@ public class ThietBiGUI extends JFrame {
 	        btn_xoa.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if(cb.getSelectedItem().equals("TenTB")) {
-						String fileName=cb.getSelectedItem().toString();
-						String dk = txt_modkTB.getText().toLowerCase();
-						bus.delThietBiByField(fileName, dk);
+					if (!cb.getSelectedItem().equals("Loại thiết bị!")){
+						String loaiTB = cb.getSelectedItem().toString();
+						bus.delThietBiByField(loaiTB);
 						reloadTable();
+						addDeviceFrame.setVisible(false);
 					}
-					if(cb.getSelectedItem().equals("MoTaTB")) {
-						String fileName=cb.getSelectedItem().toString();
-						String dk = txt_modkTB.getText();
-						bus.delThietBiByField(fileName, dk);
-						reloadTable();
+					else {
+						JOptionPane.showMessageDialog(null, "Vui lòng chọn loại thiết bị!");
 					}
 				}
 			});
