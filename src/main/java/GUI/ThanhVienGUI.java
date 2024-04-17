@@ -1135,6 +1135,8 @@ public class ThanhVienGUI extends javax.swing.JFrame {
                         row.add(tv.getEmail());
                         row.add(tv.getPassword());
                         model.addRow(row);
+
+                        tvBus.addThanhVien(tv);
                     }
                 }
                 memberTbl.setModel(model);
