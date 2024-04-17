@@ -45,8 +45,8 @@ public class ThongKeBUS {
 
         LocalDateTime datetimeStart = LocalDateTime.parse(s_datetime,formatter);
         for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
-            LocalDateTime dt = LocalDateTime.parse(tt.getTgVao(),formatter);
             if (tt.getTgVao() != null) {
+            LocalDateTime dt = LocalDateTime.parse(tt.getTgVao(),formatter);
                 if (dt.isEqual(datetimeStart) || dt.isAfter(datetimeStart)) {
                     lstFound.add(tt);
                 }
@@ -65,8 +65,9 @@ public class ThongKeBUS {
 
         LocalDateTime datetimeEnd = LocalDateTime.parse(s_datetime,formatter);
         for (ThongTinSD tt: ttsdBUS.getListThongTinSD()){
-            LocalDateTime dt = LocalDateTime.parse(tt.getTgVao(),formatter);
             if (tt.getTgVao() != null) {
+            LocalDateTime dt = LocalDateTime.parse(tt.getTgVao(),formatter);
+
                 if (dt.isEqual(datetimeEnd) || dt.isBefore(datetimeEnd)) {
                     lstFound.add(tt);
                 }

@@ -102,14 +102,14 @@ public class TKXLGUI extends JFrame {
         int tongtien = 0;
         if (btnDaXuLy.isSelected()){
             for (XuLy xl : xuLyBUS.getData()){
-                if (xl.getTrangThaiXL() == 1) {
+                if (xl.getTrangThaiXL() == 0) {
                     lstXuLy.add(xl);
                     tongtien+=xl.getSoTien();
                 }
             }
         }else {
             for (XuLy xl : xuLyBUS.getData()) {
-                if (xl.getTrangThaiXL() == 0)
+                if (xl.getTrangThaiXL() == 1)
                     lstXuLy.add(xl);
             }
         }
@@ -132,7 +132,7 @@ public class TKXLGUI extends JFrame {
             vt.add(xl.getHinhThucXL());
             vt.add(xl.getSoTien());
             vt.add(xl.getNgayXL());
-            vt.add(xl.getTrangThaiXL()==0?"Đang xử lý":"Đã xử lý");
+            vt.add(xl.getTrangThaiXL()==1?"Đang xử lý":"Đã xử lý");
             nmodel.addRow(vt);
         }
         table.setModel(nmodel);

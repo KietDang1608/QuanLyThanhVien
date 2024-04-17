@@ -170,6 +170,7 @@ public class TKTTSDGUI extends JFrame {
         btnALl.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setDefaultFilter();
                 addDataToTable(tkbus.getDSVAO());
             }
         });
