@@ -413,6 +413,7 @@ public class ThietBiGUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if (!cb.getSelectedItem().equals("Loại thiết bị!")){
 					String loaiTB = cb.getSelectedItem().toString();
+					System.out.println(loaiTB);
 					bus.delThietBiByField(loaiTB);
 					reloadTable();
 					addDeviceFrame.setVisible(false);
@@ -446,10 +447,7 @@ public class ThietBiGUI extends JFrame {
 		// Xử lý tệp Excel đã chọn ở đây
 		ArrayList<ThietBi> listTBNew = bus.ExcelReader(excelFilePath);
 		for(ThietBi lst : listTBNew) {
-			String tenTB = lst.getTenTB();
-			String motaTB = lst.getMoTa();
-			ThietBi tb = new ThietBi(tenTB,motaTB);
-//				bus.addThietBi(tb);
+			bus.addThietBiEx(lst);
 		}
 		reloadTable();
 	}

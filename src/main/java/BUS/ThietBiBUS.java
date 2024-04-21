@@ -36,7 +36,11 @@ public class ThietBiBUS {
         listTB=dao.getData();
         return listTB;
     }
-
+    public void addThietBiEx(ThietBi tb)
+    {
+        dao= new ThietBiDAO();
+        dao.addThietBiEx(tb);
+    }
     public void addThietBi(ThietBi tb,String loaiTB,int year)
     {
         dao=new ThietBiDAO();

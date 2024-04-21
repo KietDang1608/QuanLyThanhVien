@@ -70,7 +70,12 @@ public class ThietBiDAO {
             System.out.println("Không tìm thấy kết quả.");
         }
     }
-
+    public void addThietBiEx(ThietBi tb)
+    {
+        session.save(tb);
+        session.getTransaction().commit();
+        session.close();
+    }
     public Boolean delThietBi(int ID)
     {
         ThietBi tb = session.get(ThietBi.class, ID);
